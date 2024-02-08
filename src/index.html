@@ -8,7 +8,7 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
         />
-        <link rel="stylesheet" href="./index.css" />
+        <link rel="stylesheet" href="./css/index.css" />
     </head>
     <body>
         <section class="section">
@@ -16,13 +16,15 @@
                 <h1 class="title has-text-centered">
                     Hyena <span class="tag is-black is-large">UPD</span>
                     <div class="menu">
-                        <a href="./core/settings.html"
+                        <a href="./content/settings.html"
                             ><img
                                 style="height: 25px"
-                                src="./assets/setting.png"
+                                src="./assets/icons/setting.png"
                         /></a>
                         <a onclick="window.close()"
-                            ><img style="height: 25px" src="./assets/close.png"
+                            ><img
+                                style="height: 25px"
+                                src="./assets/icons/close.png"
                         /></a>
                     </div>
                 </h1>
@@ -47,20 +49,9 @@
         </div>
         <div class="copyright">&copy; 2024 HYENA.</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-        <script src="./index.js"></script>
+        <script src="./js/index.js"></script>
+        <script src="./js/checkUpdate.js"></script>
         <script>
-            function getSelectedFolder() {
-                const folderInput = document.getElementById('folderInput')
-                const selectedFolder = document.getElementById('selectedFolder')
-
-                if (folderInput.files.length > 0) {
-                    const folderPath =
-                        folderInput.files[0].webkitRelativePath.split('/')[0]
-                    selectedFolder.value = folderPath
-                } else {
-                    alert('Please select a folder.')
-                }
-            }
             function updateCheck() {
                 var updateCheckBtn = document.getElementById('updateCheckBtn')
                 updateCheckBtn.classList.add('is-loading')
@@ -69,6 +60,5 @@
                 }, 1000)
             }
         </script>
-        <script src="./core/checkUpdate.js"></script>
     </body>
 </html>

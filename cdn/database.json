@@ -1,5 +1,7 @@
 {
     "liveVersion": "1.0.0",
+    "latestHardVersion": "1.0.0",
+    "latestModpackVersion": "1.0.0",
     "requiredFiles": [
         "bclib-3.30.1",
         "better-end-4.30.1",
