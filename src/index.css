@@ -1,0 +1,31 @@
+@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css';
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+* {
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden !important;
+}
+.copyright {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 12px;
+}
+.info {
+    text-align: right;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+}
+.menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+}
+.head {
+    position: fixed;
+    top: 10px;
+    left: 0px;
+}

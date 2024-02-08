@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Hyena</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+        />
+        <link rel="stylesheet" href="./index.css" />
+    </head>
+    <body>
+        <section class="section">
+            <div class="container">
+                <h1 class="title has-text-centered">
+                    Hyena <span class="tag is-black is-large">UPD</span>
+                    <div class="menu">
+                        <a href="./core/settings.html"
+                            ><img
+                                style="height: 25px"
+                                src="./assets/setting.png"
+                        /></a>
+                        <a onclick="window.close()"
+                            ><img style="height: 25px" src="./assets/close.png"
+                        /></a>
+                    </div>
+                </h1>
+                <div class="has-text-centered">
+                    <button class="button is-success" disabled>
+                        Update Mod
+                    </button>
+                    <button
+                        id="updateCheckBtn"
+                        onclick="updateCheck()"
+                        class="button is-info"
+                    >
+                        Check For Updates
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="info">
+            M VERS: <span id="modVersion">NONE</span><br />
+            USER: <span id="user">NONE</span><br />M FLDR:
+            <span id="modsDir">NONE</span>
+        </div>
+        <div class="copyright">&copy; 2024 HYENA.</div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="./index.js"></script>
+        <script>
+            function getSelectedFolder() {
+                const folderInput = document.getElementById('folderInput')
+                const selectedFolder = document.getElementById('selectedFolder')
+
+                if (folderInput.files.length > 0) {
+                    const folderPath =
+                        folderInput.files[0].webkitRelativePath.split('/')[0]
+                    selectedFolder.value = folderPath
+                } else {
+                    alert('Please select a folder.')
+                }
+            }
+            function updateCheck() {
+                var updateCheckBtn = document.getElementById('updateCheckBtn')
+                updateCheckBtn.classList.add('is-loading')
+                setTimeout(function () {
+                    updateCheckBtn.classList.remove('is-loading')
+                }, 1000)
+            }
+        </script>
+        <script src="./core/checkUpdate.js"></script>
+    </body>
+</html>
