@@ -31,6 +31,8 @@ function searchFilesForWord(folderPath, word) {
                     console.log(`Set ModpackVersion: "${fileName}"`)
                     localStorage.setItem('updater', true)
                     console.log('Set Updater: ' + true)
+                    localStorage.setItem('installed', false)
+                    console.log('Set Installed: ' + false)
                 }
             }
         })

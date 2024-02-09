@@ -16,7 +16,7 @@
     position: fixed;
     bottom: 10px;
     right: 10px;
-    font-size: 12px;
+    font-size: 10px;
 }
 .menu {
     position: fixed;
@@ -28,4 +28,26 @@
     position: fixed;
     top: 10px;
     left: 0px;
+}
+/* styles.css */
+.alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+.close-btn {
+    margin-top: 10px;
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

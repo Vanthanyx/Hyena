@@ -6,6 +6,7 @@ const createWindow = () => {
         width: 750,
         height: 500,
         frame: false,
+        icon: path.join(__dirname, 'src/assets/icons/hyena.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

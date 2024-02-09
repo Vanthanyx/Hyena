@@ -14,7 +14,12 @@
         <section class="section">
             <div class="container">
                 <h1 class="title has-text-centered">
-                    Hyena <span class="tag is-black is-large">UPD</span>
+                    Hyena<span class="tag is-black is-large"
+                        >UPDATER&nbsp;
+                        <img
+                            src="./assets/icons/hyena.png"
+                            style="width: 25px; height: 25px"
+                    /></span>
                     <div class="menu">
                         <a href="./content/settings.html"
                             ><img
@@ -29,36 +34,47 @@
                     </div>
                 </h1>
                 <div class="has-text-centered">
-                    <button class="button is-success" disabled>
-                        Update Mod
+                    <button
+                        onclick="addLoadingClass2()"
+                        id="reload2"
+                        class="button is-success is-outlined"
+                    >
+                        Check Updates
                     </button>
                     <button
-                        id="updateCheckBtn"
-                        onclick="updateCheck()"
-                        class="button is-info"
+                        onclick="addLoadingClass1()"
+                        id="reload1"
+                        class="button is-info is-outlined"
                     >
-                        Check For Updates
+                        Reload Cache
                     </button>
                 </div>
             </div>
         </section>
         <div class="info">
             M VERS: <span id="modVersion">NONE</span><br />
-            USER: <span id="user">NONE</span><br />M FLDR:
-            <span id="modsDir">NONE</span>
+            M FLDR: <span id="modsDir">NONE</span>
         </div>
         <div class="copyright">&copy; 2024 HYENA.</div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="./js/index.js"></script>
-        <script src="./js/checkUpdate.js"></script>
-        <script>
-            function updateCheck() {
-                var updateCheckBtn = document.getElementById('updateCheckBtn')
-                updateCheckBtn.classList.add('is-loading')
-                setTimeout(function () {
-                    updateCheckBtn.classList.remove('is-loading')
-                }, 1000)
-            }
-        </script>
     </body>
+    <script src="./js/updater.js"></script>
+    <script>
+        function addLoadingClass1() {
+            const reloadButton = document.getElementById('reload1')
+            reloadButton.classList.add('is-loading')
+            setTimeout(() => {
+                reloadButton.classList.remove('is-loading')
+                alert('Cache Reloaded.')
+            }, 3000)
+        }
+        function addLoadingClass2() {
+            const reloadButton = document.getElementById('reload2')
+            reloadButton.classList.add('is-loading')
+            setTimeout(() => {
+                reloadButton.classList.remove('is-loading')
+                alert('No Updates Found.')
+            }, 3000)
+        }
+    </script>
 </html>
