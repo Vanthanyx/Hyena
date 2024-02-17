@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Hyena</title>
+        <title>Raptor</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -11,13 +11,14 @@
         <link rel="stylesheet" href="./css/index.css" />
     </head>
     <body>
+        <div class="holographic">
         <section class="section">
             <div class="container">
                 <h1 class="title has-text-centered">
-                    Hyena<span class="tag is-black is-large"
-                        >UPDATER&nbsp;
+                    RaptorUPD
+                    <span class="tag is-black is-large">
                         <img
-                            src="./assets/icons/hyena.png"
+                            src="./assets/icons/raptor.png"
                             style="width: 25px; height: 25px"
                     /></span>
                     <div class="menu">
@@ -37,14 +38,14 @@
                     <button
                         onclick="addLoadingClass2()"
                         id="reload2"
-                        class="button is-success is-outlined"
+                        class="button is-success"
                     >
                         Check Updates
                     </button>
                     <button
                         onclick="addLoadingClass1()"
                         id="reload1"
-                        class="button is-info is-outlined"
+                        class="button is-info"
                     >
                         Reload Cache
                     </button>
@@ -55,9 +56,10 @@
             M VERS: <span id="modVersion">NONE</span><br />
             M FLDR: <span id="modsDir">NONE</span>
         </div>
-        <div class="copyright">&copy; 2024 HYENA.</div>
+        <div class="copyright">&copy; 2024 RAPTOR.</div>
         <script src="./js/index.js"></script>
     </body>
+</div>
     <script src="./js/updater.js"></script>
     <script>
         function addLoadingClass1() {

@@ -1,4 +1,10 @@
 const isUpdaterEnabled = localStorage.getItem('updater')
+const modsDir = localStorage.getItem('modsDir')
+
+if (!modsDir) {
+    location.href = './content/settings.html'
+    alert('Please specify a mods folder to continue.')
+}
 
 if (isUpdaterEnabled) {
     console.log('Updater Enabled. Checking Updates...')
@@ -6,7 +12,6 @@ if (isUpdaterEnabled) {
     const latestModpackVersion = localStorage.getItem('latestModpackVersion')
     const hardVersion = localStorage.getItem('hardVersion')
     const latestHardVersion = localStorage.getItem('latestHardVersion')
-    const modsDir = localStorage.getItem('modsDir')
 
     if (modpackVersion !== latestModpackVersion) {
         console.log('Modpack Update Available!')
@@ -19,8 +24,6 @@ if (isUpdaterEnabled) {
     }
 } else {
     console.log('Updater Disabled. Skipping Updates...')
-    location.href = './content/settings.html'
-    alert('Please specify a mods folder to continue.')
 }
 
 function updateModpack() {

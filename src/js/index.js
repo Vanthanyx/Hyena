@@ -24,28 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const requiredFiles = JSON.parse(requiredFilesString)
             for (const file of requiredFiles) {
                 if (!fs.existsSync(file)) {
-                    const savePath = `modsDirValue/${file}.jar`
-                    const fileUrl =
-                        'https://raw.githubusercontent.com/Vanthanyx/Hyena/master/cdn/mods/' +
-                        file +
-                        '.jar'
                     console.log('File Not Found: ' + file)
-                    download.download(
-                        {
-                            url: fileUrl,
-                            path: savePath,
-                        },
-                        function (error, info) {
-                            if (error) {
-                                console.error('Download failed:', error)
-                            } else {
-                                console.log(
-                                    'File downloaded successfully:',
-                                    info.filePath
-                                )
-                            }
-                        }
-                    )
                 }
             }
         } else {
@@ -79,5 +58,5 @@ function webDBFetch(url) {
 }
 
 const jsonURL =
-    'https://raw.githubusercontent.com/Vanthanyx/Hyena/master/cdn/database.json'
+    'https://raw.githubusercontent.com/Vanthanyx/Raptor/master/cdn/database.json'
 webDBFetch(jsonURL)

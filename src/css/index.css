@@ -51,3 +51,32 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.holographic {
+    background: linear-gradient(
+        40deg,
+        hsl(0, 100%, 50%, 0.25),
+        hsl(40, 100%, 50%, 0.25),
+        hsl(80, 100%, 50%, 0.25),
+        hsl(120, 100%, 50%, 0.25),
+        hsl(160, 100%, 50%, 0.25),
+        hsl(200, 100%, 50%, 0.25),
+        hsl(240, 100%, 50%, 0.25)
+    );
+    height: 100vh;
+    background-size: 300% 300%;
+    animation: gradient 12s ease infinite;
+    backdrop-filter: blur(20px);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
