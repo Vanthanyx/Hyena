@@ -1,5 +1,6 @@
 node_modules/
 storage/
+ref/
 out/
 package-lock.json
 .prettierignore

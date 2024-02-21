@@ -1,10 +1,12 @@
 @import 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css';
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
     font-family: 'JetBrains Mono', monospace;
+    /*font-family: 'Montserrat', sans-serif;*/
     overflow: hidden !important;
 }
+
 .copyright {
     position: fixed;
     bottom: 10px;
@@ -50,33 +52,4 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.holographic {
-    background: linear-gradient(
-        40deg,
-        hsl(0, 100%, 50%, 0.25),
-        hsl(40, 100%, 50%, 0.25),
-        hsl(80, 100%, 50%, 0.25),
-        hsl(120, 100%, 50%, 0.25),
-        hsl(160, 100%, 50%, 0.25),
-        hsl(200, 100%, 50%, 0.25),
-        hsl(240, 100%, 50%, 0.25)
-    );
-    height: 100vh;
-    background-size: 300% 300%;
-    animation: gradient 12s ease infinite;
-    backdrop-filter: blur(20px);
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
 }

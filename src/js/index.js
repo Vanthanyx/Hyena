@@ -16,22 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (modsDirElement) {
         modsDirElement.textContent = modsDirValue
     }
-
-    const installedValue = localStorage.getItem('installed')
-    if (installedValue && !null) {
-        const requiredFilesString = localStorage.getItem('requiredFiles')
-        if (requiredFilesString) {
-            const requiredFiles = JSON.parse(requiredFilesString)
-            for (const file of requiredFiles) {
-                if (!fs.existsSync(file)) {
-                    console.log('File Not Found: ' + file)
-                }
-            }
-        } else {
-            console.log('No required files found in localStorage.')
-        }
-    }
-
     setValueIfNotNull('modpackVersion', 'modVersion')
 })
 

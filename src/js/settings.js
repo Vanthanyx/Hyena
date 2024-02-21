@@ -9,7 +9,7 @@ function saveData(modsDir) {
     ) {
         localStorage.setItem('modsDir', modsDir)
         console.log(`Set ModsDir: "${modsDir}"`)
-        searchFilesForWord(modsDir, 'starcore')
+        searchFilesForWord(modsDir, 'SCMP')
     } else {
         console.log('ModsDir does not exist!')
         alert('That mods folder does not exist!')
