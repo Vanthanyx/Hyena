@@ -2,5 +2,14 @@
     "liveVersion": "1.0.0",
     "latestHardVersion": "1.0.0",
     "latestModpackVersion": "1.0.0",
-    "modpackLink": "https://file.io/noVENbFXM2Z4"
+    "modLinks": [
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z01",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z02",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z03",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z04",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z05",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z06",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z07",
+        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.zip"
+    ]
 }
