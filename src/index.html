@@ -47,20 +47,21 @@
                         Reload Cache
                     </button>
                     <br />
-                    <button style="margin-top: 10px" class="button is-success">
+                    <button
+                        style="margin-top: 10px"
+                        class="button is-success"
+                        disabled
+                    >
                         Install Modpack!
                     </button>
                 </div>
             </div>
         </section>
-        <div class="info">
-            M VERS: <span id="modVersion">NONE</span><br />
-            M FLDR: <span id="modsDir">NONE</span>
-        </div>
         <div class="copyright">&copy; 2024 RAPTOR.</div>
         <script src="./js/index.js"></script>
     </body>
     <script src="./js/updater.js"></script>
+    <script src="./js/checker.js"></script>
     <script>
         function addLoadingClass1() {
             const reloadButton = document.getElementById('reload1')
@@ -78,5 +79,10 @@
                 alert('No Updates Found.')
             }, 3000)
         }
+
+        if (modsDir) {
+            checkModsDir()
+        }
     </script>
+    <script src="./js/checker.js"></script>
 </html>

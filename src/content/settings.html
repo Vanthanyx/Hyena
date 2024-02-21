@@ -23,12 +23,12 @@
         <section class="section">
             <div class="container has-text-centered">
                 <h1 class="title">
-                    RaptorUPD
-                    <span class="tag is-black is-large">
-                        <img
-                            src="../assets/icons/raptor.png"
-                            style="width: 25px; height: 25px"
-                    /></span>
+                    Raptor
+                    <img
+                        src="../assets/icons/raptor_alt.png"
+                        style="width: 45px; height: 45px"
+                    />
+                    Update
                 </h1>
                 <h2>Mods Folder</h2>
                 <input
@@ -36,13 +36,8 @@
                     class="input is-small"
                     type="text"
                     placeholder="Enter Mods Directory"
-                /><br /><br />
-                <button
-                    onclick="saveDataS1()"
-                    class="button is-small is-success is-outlined"
-                >
-                    Save
-                </button>
+                    style="margin-bottom: 10px"
+                /><br />
                 <button
                     onclick="setVanilla()"
                     class="button is-small is-info is-outlined"
@@ -50,11 +45,52 @@
                     Use Vanilla Launcher
                 </button>
                 <button
+                    onclick="openFolder()"
+                    class="button is-small is-info is-outlined"
+                    disabled
+                >
+                    Open Folder
+                </button>
+                <br />
+                <br />
+                <br />
+                <label class="checkbox">
+                    <input type="checkbox" id="autoUpdates" />
+                    Enable Auto Updates
+                </label>
+                <br />
+                <label class="checkbox" disabled>
+                    <input type="checkbox" disabled />
+                    Run Beta Versions
+                </label>
+                <br />
+                <br />
+                <div class="select is-rounded is-info">
+                    <select disabled>
+                        <option>Install No Extras</option>
+                        <option>Install Iris Shaders</option>
+                        <option>Install Simple VC</option>
+                        <option>Install Both Options</option>
+                    </select>
+                </div>
+                <br />
+                <br />
+                <button
+                    onclick="saveDataS1()"
+                    class="button is-small is-success is-outlined is-light"
+                >
+                    Save
+                </button>
+                <button
                     onclick="eraseData()"
                     class="button is-small is-danger is-outlined is-light"
                 >
                     Erase
                 </button>
+            </div>
+            <div class="info">
+                M VERS: <span id="modVersion">NONE</span><br />
+                M FLDR: <span id="modsFldr">NONE</span>
             </div>
         </section>
         <script src="../js/settings.js"></script>
@@ -68,19 +104,44 @@
                 )
             }
 
+            function openFolder() {}
+
             async function saveDataS1() {
                 const modsDir = document.getElementById('modsDir').value
                 await saveData(modsDir)
+                const autoUpdates = document.getElementById('autoUpdates')
+
+                if (autoUpdates.checked) {
+                    console.log('autoUpdates is on.')
+                    localStorage.setItem('updater', true)
+                } else {
+                    console.log('autoUpdates is off.')
+                    localStorage.setItem('updater', false)
+                }
             }
 
             const modsDirValue = localStorage.getItem('modsDir')
+            const autoUpdatesValue = localStorage.getItem('updater')
+
             if (modsDirValue) {
                 document.getElementById('modsDir').value = modsDirValue
+            }
+
+            if (autoUpdatesValue && autoUpdatesValue === 'true') {
+                document.getElementById('autoUpdates').checked = true
             }
 
             function eraseData() {
                 localStorage.clear()
                 location.reload()
+            }
+
+            const modsDir = localStorage.getItem('modsDir')
+            const modmodpackVersion = localStorage.getItem('modpackVersion')
+            if (modsDir && modmodpackVersion) {
+                document.getElementById('modVersion').innerText =
+                    modmodpackVersion
+                document.getElementById('modsFldr').innerText = modsDir
             }
         </script>
     </body>

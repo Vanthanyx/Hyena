@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 document.addEventListener('DOMContentLoaded', function () {
     function setValueIfNotNull(key, elementId) {
         const value = localStorage.getItem(key)
