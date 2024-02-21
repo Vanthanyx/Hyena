@@ -3,13 +3,13 @@
     "latestHardVersion": "1.0.0",
     "latestModpackVersion": "1.0.0",
     "modLinks": [
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z01",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z02",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z03",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z04",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z05",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z06",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.z07",
-        "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.zip"
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808661019500565/mods.z01?ex=65e8451d&is=65d5d01d&hm=024bc32ee6da3534aa3dc88d7c99b10b5f84dd175d2c0cdedb4be58430fba6e7&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808661392785438/mods.z02?ex=65e8451e&is=65d5d01e&hm=3c8e6850d010d4af5e94e9b9c2648acdc9a6e2c53ede1643b713b890bfb70970&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808661690454066/mods.z03?ex=65e8451e&is=65d5d01e&hm=251c7ddfb7e768acab5e49679ae2b01e49e2646d2391e7dc595df265879e0507&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808662013677578/mods.z04?ex=65e8451e&is=65d5d01e&hm=08b6c11adceb6713430cb3e28fc86d8dd73fea93411ecaee9b41c5cf922dfa6a&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808659777855518/mods.z05?ex=65e8451d&is=65d5d01d&hm=1a1a02a63f30ccf89f969aa8cf8d3b1ed479ccde4a7a851c469b6b768d1f0cc9&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808660122042419/mods.z06?ex=65e8451d&is=65d5d01d&hm=5754a666b4b5d4d614496811c7e2e378fd02e83c9c5720facec6e929242872ec&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808660398604339/mods.z07?ex=65e8451d&is=65d5d01d&hm=2cc07ed96e34ffe522d0e15594bc69ad8f9181c13ae7570ee46f0646da808ff1&",
+        "https://cdn.discordapp.com/attachments/1209808441330245663/1209808660717641728/mods.zip?ex=65e8451d&is=65d5d01d&hm=43fbb4e68449903bcf876d36598be09914747f8ad68ad31f0bbad633a266fdbd&"
     ]
 }
