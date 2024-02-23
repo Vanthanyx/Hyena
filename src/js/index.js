@@ -1,22 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-    function setValueIfNotNull(key, elementId) {
-        const value = localStorage.getItem(key)
-        const element = document.getElementById(elementId)
-        if (value !== null && element) {
-            element.textContent = value
-        } else if (!element) {
-            console.log('Element with ID "' + elementId + '" not found.')
-        }
-    }
-
-    const modsDirValue = localStorage.getItem('modsDir') || 'NONE'
-    const modsDirElement = document.getElementById('modsDir')
-    if (modsDirElement) {
-        modsDirElement.textContent = modsDirValue
-    }
-    setValueIfNotNull('modpackVersion', 'modVersion')
-})
-
 function webDBFetch(url) {
     fetch(url)
         .then((response) => {

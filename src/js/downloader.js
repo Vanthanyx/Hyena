@@ -1,41 +1,36 @@
-const fetch = require('node-fetch')
 const path = require('path')
+const axios = require('axios')
 
-async function downloadFiles(links, folderPath) {
+// Function to download a file from a URL and save it to a specified folder
+async function downloadFile(url, folderPath) {
     try {
-        // Check if the folder exists, if not, create it
-        if (!fs.existsSync(folderPath)) {
-            fs.mkdirSync(folderPath, { recursive: true })
-        }
-
-        // Iterate through the links array
-        for (let i = 0; i < links.length; i++) {
-            const link = links[i]
-            const fileName = path.basename(link) // Extract file name from the URL
-
-            const response = await fetch(link)
-            if (!response.ok) {
-                throw new Error(
-                    `Failed to download ${fileName}: ${response.status} ${response.statusText}`
+        const response = await axios({
+            url,
+            method: 'GET',
+            responseType: 'arraybuffer', // Use 'arraybuffer' to handle binary data
+            onDownloadProgress: (progressEvent) => {
+                const percentCompleted = Math.round(
+                    (progressEvent.loaded * 100) / progressEvent.total
                 )
-            }
+                document.getElementById('downloadProgress').value =
+                    percentCompleted
+                if (percentCompleted === 100) {
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.add('is-success')
+                    alert('Download complete!')
+                }
+            },
+        })
 
-            const fileStream = fs.createWriteStream(
-                path.join(folderPath, fileName)
-            )
-            await new Promise((resolve, reject) => {
-                response.body.pipe(fileStream)
-                response.body.on('error', (err) => {
-                    reject(err)
-                })
-                fileStream.on('finish', function () {
-                    resolve()
-                })
-            })
+        const fileName = path.basename(url)
+        const filePath = path.join(folderPath, fileName)
 
-            console.log(`File ${fileName} downloaded successfully.`)
-        }
+        fs.writeFileSync(filePath, Buffer.from(response.data)) // Convert ArrayBuffer to Buffer
+
+        console.log(`File downloaded to: ${filePath}`)
     } catch (error) {
-        console.error('Error downloading files:', error)
+        console.error(`Error downloading file: ${error.message}`)
+        throw error
     }
 }

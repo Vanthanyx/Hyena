@@ -53,3 +53,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+#downloadProgress {
+    display: none; /* Hide the progress bar initially */
+}

@@ -3,8 +3,8 @@ const path = require('node:path')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
-        width: 750,
-        height: 500,
+        width: 863,
+        height: 575,
         frame: false,
         icon: path.join(__dirname, 'src/assets/icons/raptor.png'),
         webPreferences: {
@@ -19,6 +19,11 @@ const createWindow = () => {
 
     const appVersion = app.getVersion()
     mainWindow.webContents.send('app-version', appVersion)
+
+    ipcMain.on('reload-app', () => {
+        app.relaunch()
+        app.quit()
+    })
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()

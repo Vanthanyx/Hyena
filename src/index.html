@@ -39,10 +39,9 @@
                         Check Updates
                     </button>
                     <button
-                        onclick="addLoadingClass1()"
+                        onclick="reloadApp()"
                         id="reload1"
                         class="button is-info is-light"
-                        disabled
                     >
                         Reload Cache
                     </button>
@@ -50,10 +49,19 @@
                     <button
                         style="margin-top: 10px"
                         class="button is-success"
+                        onclick="downloadFilesHTML()"
+                        id="installButton"
                         disabled
                     >
                         Install Modpack!
                     </button>
+                    <br />
+                    <progress
+                        id="downloadProgress"
+                        style="margin-top: 50px"
+                        class="progress"
+                        max="100"
+                    ></progress>
                 </div>
             </div>
         </section>
@@ -63,13 +71,11 @@
     <script src="./js/updater.js"></script>
     <script src="./js/checker.js"></script>
     <script>
-        function addLoadingClass1() {
-            const reloadButton = document.getElementById('reload1')
-            reloadButton.classList.add('is-loading')
-            setTimeout(() => {
-                reloadButton.classList.remove('is-loading')
-                alert('Cache Reloaded.')
-            }, 3000)
+        function downloadFilesHTML() {
+            document.getElementById('downloadProgress').style.display = 'block'
+            const links = localStorage.getItem('modLink')
+            const folderPath = localStorage.getItem('modsDir')
+            downloadFile(links, folderPath)
         }
         function addLoadingClass2() {
             const reloadButton = document.getElementById('reload2')
@@ -84,6 +90,12 @@
             checkModsDir()
         }
         const modLinks = localStorage.getItem('modLinks')
+
+        const { ipcRenderer } = require('electron')
+        function reloadApp() {
+            console.log('Sending reload request to main process...')
+            ipcRenderer.send('reload-app')
+        }
     </script>
     <script src="./js/downloader.js"></script>
     <script src="./js/checker.js"></script>

@@ -34,6 +34,8 @@ function checkModsDir() {
                     })
                 } else {
                     console.log('No SCMP files found in the mods directory.')
+                    const button = document.getElementById('installButton')
+                    button.removeAttribute('disabled')
                 }
             })
         } else {
