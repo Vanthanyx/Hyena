@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
+const url = require('url')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
-        width: 863,
+        width: 1000,
         height: 575,
         frame: false,
         icon: path.join(__dirname, 'src/assets/icons/raptor.png'),
@@ -23,6 +24,26 @@ const createWindow = () => {
     ipcMain.on('reload-app', () => {
         app.relaunch()
         app.quit()
+    })
+
+    ipcMain.on('open-login-window', () => {
+        const loginWindow = new BrowserWindow({
+            width: 400,
+            height: 400,
+            frame: false,
+            icon: path.join(__dirname, 'src/assets/icons/raptor.png'),
+            webPreferences: {
+                nodeIntegration: true,
+            },
+        })
+
+        loginWindow.loadURL(
+            url.format({
+                pathname: path.join(__dirname, 'src/content/login.html'),
+                protocol: 'file:',
+                slashes: true,
+            })
+        )
     })
 
     // Open the DevTools.

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Raptor | Login</title>
+        <link rel="stylesheet" href="../css/login.css" />
+        <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
+        <script src="../js/webhook.js"></script>
+    </head>
+    <body>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form
+                id="loginForm"
+                action="#"
+                method="POST"
+                onsubmit="submitForm(event)"
+            >
+                <div class="form-group">
+                    <label for="username"
+                        ><a href="https://mcuuid.net/">
+                            <img
+                                style="height: 14px"
+                                src="../assets/icons/info.png"
+                        /></a>
+                        UUID:
+                    </label>
+                    <input type="text" id="username" name="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Auth Key:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <button type="submit">Login</button>
+                </div>
+                <button onclick="window.close()" class="exit-btn">Exit</button>
+            </form>
+        </div>
+        <script>
+            function submitForm(event) {
+                event.preventDefault() // Prevent form submission
+                const form = document.getElementById('loginForm')
+                const username = form.username.value
+                const password = form.password.value
+                runLogin(username, password)
+            }
+            var loggedIn = localStorage.getItem('loggedIn')
+            if (loggedIn === 'true') {
+                JSAlert.confirm('You are already loggged in, Exit?').then(
+                    function (result) {
+                        if (!result) return
+                        window.close()
+                    }
+                )
+            }
+        </script>
+        <script src="../js/login.js"></script>
+    </body>
+</html>

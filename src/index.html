@@ -5,8 +5,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Raptor</title>
         <link rel="stylesheet" href="./css/index.css" />
+        <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
     </head>
     <body>
+        <div class="titlebar"></div>
+        <div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="h"></div>
+            <div class="v"></div>
+        </div>
         <section class="section">
             <div class="container">
                 <h1 class="title has-text-centered">
@@ -31,12 +62,11 @@
                 </h1>
                 <div class="has-text-centered">
                     <button
-                        onclick="addLoadingClass2()"
+                        onclick="synchronize()"
                         id="reload2"
                         class="button is-info is-light"
-                        disabled
                     >
-                        Check Updates
+                        Synchronize Data
                     </button>
                     <button
                         onclick="reloadApp()"
@@ -55,6 +85,7 @@
                     >
                         Install Modpack!
                     </button>
+
                     <br />
                     <progress
                         id="downloadProgress"
@@ -70,6 +101,7 @@
     </body>
     <script src="./js/updater.js"></script>
     <script src="./js/checker.js"></script>
+    <script src="./js/synchronize.js"></script>
     <script>
         function downloadFilesHTML() {
             document.getElementById('downloadProgress').style.display = 'block'
@@ -77,18 +109,22 @@
             const folderPath = localStorage.getItem('modsDir')
             downloadFile(links, folderPath)
         }
-        function addLoadingClass2() {
-            const reloadButton = document.getElementById('reload2')
-            reloadButton.classList.add('is-loading')
-            setTimeout(() => {
-                reloadButton.classList.remove('is-loading')
-                alert('No Updates Found.')
-            }, 3000)
-        }
 
         if (modsDir) {
             checkModsDir()
         }
+        function triggerA() {
+            JSAlert.confirm('Are you sure you want to delete this file?').then(
+                function (result) {
+                    // Check if pressed yes
+                    if (!result) return
+
+                    // User pressed yes!
+                    JSAlert.alert('File deleted!')
+                }
+            )
+        }
+
         const modLinks = localStorage.getItem('modLinks')
 
         const { ipcRenderer } = require('electron')

@@ -18,7 +18,12 @@ async function downloadFile(url, folderPath) {
                     document
                         .getElementById('downloadProgress')
                         .classList.add('is-success')
-                    alert('Download complete!')
+                    JSAlert.alert('Download complete!')
+                    setTimeout(function () {
+                        document.getElementById(
+                            'downloadProgress'
+                        ).removeAttribute
+                    }, 5000)
                 }
             },
         })

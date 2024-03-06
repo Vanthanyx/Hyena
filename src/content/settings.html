@@ -9,9 +9,47 @@
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
         />
         <link rel="stylesheet" href="../css/index.css" />
+        <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
+        <script src="../js/webhook.js"></script>
     </head>
     <body>
+        <div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="rainbow"></div>
+            <div class="h"></div>
+            <div class="v"></div>
+        </div>
+        <div class="titlebar"></div>
         <div class="menu">
+            <a onclick="redeemCode()"
+                ><img style="height: 25px" src="../assets/icons/gift.png"
+            /></a>
+            <a id="openLoginWindow">
+                <img style="height: 25px" src="../assets/icons/user.png" />
+            </a>
             <a href="../index.html"
                 ><img style="height: 25px" src="../assets/icons/home.png"
             /></a>
@@ -19,7 +57,6 @@
                 ><img style="height: 25px" src="../assets/icons/close.png"
             /></a>
         </div>
-        <span class="head tag is-large is-white"><img id="playerHead" /></span>
         <section class="section">
             <div class="container has-text-centered">
                 <h1 class="title">
@@ -65,16 +102,6 @@
                 </label>
                 <br />
                 <br />
-                <div class="select is-rounded is-info">
-                    <select disabled>
-                        <option>Install No Extras</option>
-                        <option>Install Iris Shaders</option>
-                        <option>Install Simple VC</option>
-                        <option>Install Both Options</option>
-                    </select>
-                </div>
-                <br />
-                <br />
                 <button
                     onclick="saveDataS1()"
                     class="button is-small is-success is-outlined is-light"
@@ -92,6 +119,7 @@
                 M VERS: <span id="modVersion">NONE</span><br />
                 M FLDR: <span id="modsFldr">NONE</span>
             </div>
+            <div class="copyright">&copy; 2024 RAPTOR.</div>
         </section>
         <script src="../js/settings.js"></script>
         <script>
@@ -143,6 +171,14 @@
                     modmodpackVersion
                 document.getElementById('modsFldr').innerText = modsDir
             }
+
+            const { ipcRenderer } = require('electron')
+            document
+                .getElementById('openLoginWindow')
+                .addEventListener('click', () => {
+                    // Send an IPC message to the main process to open the login window
+                    ipcRenderer.send('open-login-window')
+                })
         </script>
     </body>
 </html>

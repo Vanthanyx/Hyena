@@ -8,7 +8,7 @@ function checkModsDir() {
             // Read the directory
             fs.readdir(modsDir, (err, files) => {
                 if (err) {
-                    alert('Error reading directory:', err)
+                    JSAlert.alert('Error reading directory:', err)
                     return
                 }
                 const scmpFiles = files.filter((fileName) =>

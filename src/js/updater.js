@@ -2,8 +2,14 @@ const isUpdaterEnabled = localStorage.getItem('updater') === 'true'
 const modsDir = localStorage.getItem('modsDir')
 
 if (!modsDir) {
-    alert('Please specify a mods folder to continue.')
-    location.href = './content/settings.html'
+    JSAlert.alert(
+        'Please specify a mods folder to continue.',
+        null,
+        null,
+        'OK'
+    ).then(function () {
+        location.href = './content/settings.html'
+    })
 } else {
     if (isUpdaterEnabled) {
         console.log('Updater Enabled. Checking Updates...')
