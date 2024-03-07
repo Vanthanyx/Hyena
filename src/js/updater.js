@@ -35,15 +35,32 @@ if (!modsDir) {
 }
 
 function updateModpack() {
-    const result = confirm('Click OK To Update Modpack!')
-    if (result) {
-        console.log('Updating Modpack...')
-    }
+    JSAlert.alert(
+        'Please update your modpack!\n' +
+            localStorage.getItem('modpackVersion') +
+            ' -> ' +
+            localStorage.getItem('latestModpackVersion'),
+        'New Modpack Version!'
+    )
 }
 
 function updateApp() {
-    const result = confirm('Click OK To Download Updater!')
-    if (result) {
-        console.log('Downloading Updater...')
-    }
+    JSAlert.confirm('Click okay to update the app!', 'New App Version!').then(
+        function (result) {
+            if (!result) return
+            const appUpdaterURL = localStorage.getItem('appUpdaterURL')
+            const filename = 'RaptorLauncher.exe'
+            downloadFile(appUpdaterURL, filename)
+            JSAlert.alert('File deleted!')
+        }
+    )
+}
+
+function downloadFile(url, filename) {
+    const anchorElement = document.createElement('a')
+    anchorElement.href = url
+    anchorElement.download = filename
+    document.body.appendChild(anchorElement)
+    anchorElement.click()
+    document.body.removeChild(anchorElement)
 }

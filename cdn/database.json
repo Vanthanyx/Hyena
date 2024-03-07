@@ -1,10 +1,11 @@
 {
-    "liveVersion": "0.1.0",
-    "latestHardVersion": "0.1.0",
+    "liveVersion": "1.0.0",
+    "latestHardVersion": "1.0.0",
     "latestModpackVersion": "1.0.0",
     "webhookURL": "https://discord.com/api/webhooks/1215000449346834562/NSi4Zmomars94fkhcgEbndQgt4T3ieIT3lYPH4b1Cw1wMn-O9TLeNqBbMeHHe9n1900t",
     "webhookPrivURL": "https://discord.com/api/webhooks/1215005702792282172/imioPH5ZahpwzUcDhZMKiWGgl7EiYfjaQNNFpDGXVNT-AW8OzT9rjVqcEWrhYnVI16I4",
     "zipLink": "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.zip",
+    "appUpdaterURL": "https://github.com/Vanthanyx/Raptor/raw/master/cdn/download/RaptorLauncher.exe",
     "requiredFiles": [
         "starcore-1.0.0.jar",
         "resourcefullib-fabric-1.20.1-2.1.23.jar",

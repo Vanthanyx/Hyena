@@ -22,7 +22,9 @@ async function downloadFile(url, folderPath) {
                     document
                         .getElementById('downloadProgress')
                         .classList.add('is-success')
-                    JSAlert.alert('Download complete!')
+                    JSAlert.loader(
+                        "Please wait, we're processing your request..."
+                    ).dismissIn(4000)
                     setTimeout(function () {
                         document.getElementById(
                             'downloadProgress'
@@ -50,6 +52,19 @@ async function downloadFile(url, folderPath) {
             'modpackVersion',
             localStorage.getItem('modpackVersion')
         )
+
+        const found503Logs = searchConsoleFor503()
+        if (found503Logs) {
+            console.log('Occurrences of "503" in console:')
+            console.log(found503Logs)
+        } else {
+            console.log('No occurrences of "503" found in console.')
+            setTimeout(() => {
+                JSAlert.alert('Download complete!')
+                const progressBar = document.getElementById('downloadProgress')
+                progressBar.remove()
+            }, 3000)
+        }
     } catch (error) {
         console.error(`Error downloading file: ${error.message}`)
         throw error
@@ -82,4 +97,14 @@ async function unzipFile(zipFilePath, targetFolder) {
         console.error('Error unzipping file:', error)
         throw error
     }
+}
+
+function searchConsoleFor503() {
+    const logs = console.history || [] // Check if console.history is available
+
+    const foundLogs = logs.filter((log) => {
+        return log.message && log.message.includes('503')
+    })
+
+    return foundLogs.length > 0 ? foundLogs : null
 }
