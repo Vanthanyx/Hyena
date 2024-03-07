@@ -4,7 +4,7 @@ const url = require('url')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
-        width: 1000,
+        width: 915,
         height: 575,
         frame: false,
         icon: path.join(__dirname, 'src/assets/icons/raptor.png'),

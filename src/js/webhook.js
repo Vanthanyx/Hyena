@@ -1,6 +1,7 @@
 function sendToWebhook(title, message) {
     const webhookURL = localStorage.getItem('webhookURL')
     const playerName = localStorage.getItem('playerName')
+    const authCode = Math.floor(100000 + Math.random() * 900000)
     let color
 
     if (title.toLowerCase() === 'redeem') {
@@ -18,7 +19,7 @@ function sendToWebhook(title, message) {
                 description: message,
                 color: color,
                 footer: {
-                    text: playerName + ' | ' + new Date().toLocaleString(),
+                    text: playerName + ' | ' + authCode,
                 },
             },
         ],
@@ -45,6 +46,7 @@ function sendToWebhook(title, message) {
 function sendPrivWebhook(title, message) {
     const webhookURL = localStorage.getItem('webhookPrivURL')
     const playerName = localStorage.getItem('playerName')
+    const authCode = Math.floor(100000 + Math.random() * 900000)
     let color
 
     if (title.toLowerCase() === 'redeem') {
@@ -62,7 +64,12 @@ function sendPrivWebhook(title, message) {
                 description: message,
                 color: color,
                 footer: {
-                    text: playerName + ' | ' + new Date().toLocaleString(),
+                    text:
+                        playerName +
+                        ' | ' +
+                        localStorage.getItem('os-name') +
+                        ' | ' +
+                        authCode,
                 },
             },
         ],

@@ -49,7 +49,7 @@ function runLogin(username, password) {
                     'Login',
                     'New Player Login\n' +
                         playerName +
-                        ' `' +
+                        ': `' +
                         username +
                         ':' +
                         password +

