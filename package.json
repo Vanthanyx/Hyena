@@ -23,6 +23,7 @@
         "@electron-forge/plugin-fuses": "^7.3.0",
         "axios": "^1.6.7",
         "electron-download-manager": "^2.1.2",
-        "electron-squirrel-startup": "^1.0.0"
+        "electron-squirrel-startup": "^1.0.0",
+        "jszip": "^3.10.1"
     }
 }

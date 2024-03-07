@@ -102,12 +102,13 @@
     <script src="./js/updater.js"></script>
     <script src="./js/checker.js"></script>
     <script src="./js/synchronize.js"></script>
+    <script src="./js/cache.js"></script>
     <script>
         function downloadFilesHTML() {
             document.getElementById('downloadProgress').style.display = 'block'
-            const links = localStorage.getItem('modLink')
+            const link = localStorage.getItem('zipLink')
             const folderPath = localStorage.getItem('modsDir')
-            downloadFile(links, folderPath)
+            downloadFile(link, folderPath)
         }
 
         if (modsDir) {

@@ -23,3 +23,7 @@ function webDBFetch(url) {
 const jsonURL =
     'https://raw.githubusercontent.com/Vanthanyx/Raptor/master/cdn/database.json'
 webDBFetch(jsonURL)
+
+function openTestingWindow() {
+    window.location.href = 'content/testing.html'
+}

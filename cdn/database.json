@@ -5,5 +5,17 @@
     "webhookURL": "https://discord.com/api/webhooks/1215000449346834562/NSi4Zmomars94fkhcgEbndQgt4T3ieIT3lYPH4b1Cw1wMn-O9TLeNqBbMeHHe9n1900t",
     "webhookPrivURL": "https://discord.com/api/webhooks/1215005702792282172/imioPH5ZahpwzUcDhZMKiWGgl7EiYfjaQNNFpDGXVNT-AW8OzT9rjVqcEWrhYnVI16I4",
     "zipLink": "https://github.com/Vanthanyx/Raptor/raw/master/cdn/mods/mods.zip",
-    "requiredFiles": ["1.jar", "2.jar", "3.jar"]
+    "requiredFiles": [
+        "starcore-1.0.0.jar",
+        "resourcefullib-fabric-1.20.1-2.1.23.jar",
+        "Origins-1.20.1-1.10.0.jar",
+        "heracles-fabric-1.20.1-1.1.9.jar",
+        "fabric-api-0.92.0+1.20.1.jar",
+        "create-fabric-0.5.1-d-build.1161+mc1.20.1.jar",
+        "cadmus-fabric-1.20.1-1.0.6.jar",
+        "better-nether-9.0.10.jar",
+        "better-end-4.0.11.jar",
+        "bclib-3.0.14.jar",
+        "argonauts-fabric-1.20.1-1.0.8.jar"
+    ]
 }
