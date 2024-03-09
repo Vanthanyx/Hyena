@@ -14,7 +14,9 @@
         <script src="../js/.imports.js"></script>
     </head>
     <body>
-        <div class="titlebar"></div>
+        <div class="titlebar">
+            Raptor | Live Server Version&nbsp;<span id="liveVersion"></span>
+        </div>
         <div class="menu">
             <a onclick="enterCode()"
                 ><img style="height: 25px" src="../assets/icons/terminal.png"
@@ -45,7 +47,7 @@
                     class="input is-small"
                     type="text"
                     placeholder="Enter Mods Directory"
-                    style="margin-bottom: 10px"
+                    style="margin-bottom: 10px; width: 80%"
                 /><br />
                 <button
                     onclick="setVanilla()"
@@ -58,6 +60,12 @@
                     class="button is-small is-info is-outlined"
                 >
                     Open Folder
+                </button>
+                <button
+                    onclick="testPing()"
+                    class="button is-small is-info is-outlined"
+                >
+                    Test Ping
                 </button>
                 <br />
                 <br />
@@ -80,23 +88,32 @@
                     Enable Auto Updates
                 </label>
                 <br />
-                <label class="checkbox" disabled>
-                    <input type="checkbox" disabled />
+                <label class="checkbox">
+                    <input type="checkbox" id="runBetaVersions" />
                     Run Beta Versions
                 </label>
                 <br />
                 <br />
+                <p>Ping: <code id="pingNumber">--ms</code></p>
                 <div class="select is-rounded">
                     <select id="serverRegion">
                         <optgroup label="Default">
                             <option>Server Region (Auto)</option>
+                            <option disabled>(Auto Loops To Self)</option>
+                        </optgroup>
+                        <optgroup label="Google Servers">
+                            <option>G-Main (San Fran.)</option>
+                            <option>G-Backup (San Fran.)</option>
                         </optgroup>
                         <optgroup label="US Regions" disabled>
-                            <option>US-Central (Chicago)</option>
-                            <option>US-East (New York)</option>
-                            <option>US-North (Seattle)</option>
-                            <option>US-South (Miami)</option>
+                            <option>US-Central (Texas)</option>
+                            <!--136.50.17.105-->
+                            <option>US-East (Atlanta)</option>
+                            <!--136.55.243.230-->
+                            <option disabled>US-North (Seattle)</option>
+                            <option disabled>US-South (Miami)</option>
                             <option>US-West (Los Angeles)</option>
+                            <!--136.52.219.28-->
                         </optgroup>
                         <optgroup label="EU Regions" disabled>
                             <option>EU-Central (Frankfurt)</option>
@@ -116,7 +133,7 @@
                             <option>OC-Central (Sydney)</option>
                         </optgroup>
                         <optgroup label="SA Regions" disabled>
-                            <option>SA-Central (Buenos Aires)</option>
+                            <option>SA-Central (Santiago)</option>
                             <option>SA-North (Sao Paulo)</option>
                         </optgroup>
                     </select>
@@ -144,6 +161,12 @@
         </section>
         <script src="../js/settings.js"></script>
         <script>
+            const liveVersion = localStorage.getItem('liveVersion')
+            document.getElementById('liveVersion').innerText = liveVersion
+            document.getElementById('liveVersion').style.color = 'white'
+            document.getElementById('liveVersion').style.textDecoration =
+                'underline'
+
             function setVanilla() {
                 const modsDir = document.getElementById('modsDir')
                 modsDir.value = path.join(
@@ -158,10 +181,28 @@
                 shell.openPath(folderPath)
             }
 
+            const modsDirValue = localStorage.getItem('modsDir')
+            const autoUpdatesValue = localStorage.getItem('updater')
+            const runBetaVersionsValue = localStorage.getItem('runBetaVersions')
+
+            if (modsDirValue) {
+                document.getElementById('modsDir').value = modsDirValue
+            }
+
+            if (autoUpdatesValue && autoUpdatesValue === 'true') {
+                document.getElementById('autoUpdates').checked = true
+            }
+
+            if (runBetaVersionsValue && runBetaVersionsValue === 'true') {
+                document.getElementById('runBetaVersions').checked = true
+            }
+
             async function saveDataS1() {
                 const modsDir = document.getElementById('modsDir').value
                 await saveData(modsDir)
                 const autoUpdates = document.getElementById('autoUpdates')
+                const runBetaVersions =
+                    document.getElementById('runBetaVersions')
 
                 if (autoUpdates.checked) {
                     console.log('autoUpdates is on.')
@@ -171,23 +212,27 @@
                     localStorage.setItem('updater', false)
                 }
 
+                if (runBetaVersions.checked) {
+                    console.log('runBetaVersions is on.')
+                    localStorage.setItem('runBetaVersions', true)
+                } else {
+                    console.log('runBetaVersions is off.')
+                    localStorage.setItem('runBetaVersions', false)
+                }
+
                 const selectElement = document.getElementById('serverRegion')
                 const selectedOption =
                     selectElement.options[selectElement.selectedIndex].value
 
                 console.log('Server region set to: ', selectedOption)
                 localStorage.setItem('serverRegion', selectedOption)
-            }
-
-            const modsDirValue = localStorage.getItem('modsDir')
-            const autoUpdatesValue = localStorage.getItem('updater')
-
-            if (modsDirValue) {
-                document.getElementById('modsDir').value = modsDirValue
-            }
-
-            if (autoUpdatesValue && autoUpdatesValue === 'true') {
-                document.getElementById('autoUpdates').checked = true
+                if (selectedOption.includes('Main')) {
+                    localStorage.setItem('pingAddress', '8.8.8.8')
+                } else if (selectedOption.includes('Backup')) {
+                    localStorage.setItem('pingAddress', '8.8.4.4')
+                } else if (selectedOption.includes('Auto')) {
+                    localStorage.setItem('pingAddress', '127.0.0.1')
+                }
             }
 
             function eraseData() {
@@ -235,6 +280,50 @@
                         '</code>'
                 )
             }
+
+            function testPing() {
+                const pingAddress = localStorage.getItem('pingAddress')
+                if (pingAddress) {
+                    getPingAverage(pingAddress, 5)
+                        .then((averageResponseTime) => {
+                            document.getElementById('pingNumber').innerText =
+                                averageResponseTime + 'ms'
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error)
+                            document.getElementById('pingNumber').innerText =
+                                'NO RESP.'
+                        })
+                }
+            }
+
+            window.onload = function () {
+                const savedRegion = localStorage.getItem('serverRegion')
+                if (savedRegion) {
+                    const selectElement =
+                        document.getElementById('serverRegion')
+                    for (let option of selectElement.options) {
+                        if (option.value === savedRegion) {
+                            option.selected = true
+                            break
+                        }
+                    }
+                }
+                const pingAddress = localStorage.getItem('pingAddress')
+                if (pingAddress) {
+                    getPingAverage(pingAddress, 5)
+                        .then((averageResponseTime) => {
+                            document.getElementById('pingNumber').innerText =
+                                averageResponseTime + 'ms'
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error)
+                            document.getElementById('pingNumber').innerText =
+                                'NO RESP.'
+                        })
+                }
+            }
         </script>
+        <script src="../js/ping.js"></script>
     </body>
 </html>

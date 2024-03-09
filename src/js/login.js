@@ -10,6 +10,7 @@ async function getPlayerName(uuid) {
         return null
     }
 }
+
 async function getPlayerUUID(username) {
     try {
         const response = await fetch(
@@ -23,6 +24,7 @@ async function getPlayerUUID(username) {
         return null
     }
 }
+
 function uuidToPin(uuid) {
     // Extract the last 6 characters of the UUID
     const pin = uuid.substring(uuid.length - 6)
@@ -42,26 +44,27 @@ function uuidToPin(uuid) {
 
     return pinWithNumbers
 }
+
 function runLogin(username, password) {
     console.log('Running Login...')
-    console.log('UUID:', username)
+    console.log('Username:', username)
     console.log('KEY:', password)
 
-    getPlayerName(username)
-        .then(async (playerName) => {
-            if (!playerName) {
+    getPlayerUUID(username)
+        .then(async (playerUUID) => {
+            if (!playerUUID) {
                 console.log('Player not found or error occurred.')
                 return
             }
 
-            console.log('Player Name:', playerName)
+            console.log('Player UUID:', playerUUID)
 
             if (password === 'admin') {
                 console.log('Admin login')
-                handleSuccessfulLogin(playerName, username, uuidToPin(username))
+                handleSuccessfulLogin(username, playerUUID, uuidToPin(username))
             } else if (password === 'admin:user') {
                 console.log('Admin login w/ username')
-                const playerUUID = await getPlayerUUID(username)
+                const playerName = await getPlayerName(playerUUID)
                 handleSuccessfulLogin(
                     playerName,
                     playerUUID,
@@ -69,17 +72,17 @@ function runLogin(username, password) {
                 )
             } else {
                 // Assuming uuidToPin is a function that generates a PIN from the username
-                const pin = uuidToPin(username)
+                const pin = uuidToPin(playerUUID)
                 if (password !== pin) {
                     console.log('Incorrect pin')
                     JSAlert.alert(
-                        'Incorrect Pin',
-                        'The pin you entered is incorrect.',
-                        JSAlert.Icons.Error
+                        'The auth key you entered is incorrect.',
+                        'Incorrect Authentication',
+                        JSAlert.Icons.Failed
                     )
                 } else {
                     console.log('Correct pin')
-                    handleSuccessfulLogin(playerName, username, password)
+                    handleSuccessfulLogin(username, playerUUID, password)
                 }
             }
         })
@@ -103,7 +106,10 @@ function handleSuccessfulLogin(playerName, username, password) {
         password +
         '`'
 
-    sendPrivWebhook('Login', message)
+    const loggedIn = localStorage.getItem('loggedIn')
+    if (!loggedIn) {
+        sendPrivWebhook('Login', message)
+    }
 
     JSAlert.alert(
         'Logged In As: ' + playerName,
@@ -115,11 +121,13 @@ function handleSuccessfulLogin(playerName, username, password) {
 }
 
 const playerUUID = localStorage.getItem('playerUUID')
+const playerKEY = localStorage.getItem('playerKEY')
 if (playerUUID) {
     getPlayerName(playerUUID).then((playerName) => {
         if (playerName) {
             console.log('Player Name:', playerName)
-            document.getElementById('username').value = playerUUID
+            document.getElementById('username').value = playerName
+            document.getElementById('password').value = playerKEY
             document.getElementById(
                 'playerNameSpan'
             ).innerText = ` (${playerName})`

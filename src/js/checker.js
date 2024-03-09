@@ -1,5 +1,6 @@
 function checkModsDir() {
-    const updaterEnabled = localStorage.getItem('updater') === 'true'
+    const updaterEnabled = localStorage.getItem('updater')
+    const modpackVersion = localStorage.getItem('modpackVersion')
     if (updaterEnabled) {
         const modsDir = localStorage.getItem('modsDir')
         const latestModpackVersion = localStorage.getItem(
@@ -55,5 +56,8 @@ function checkModsDir() {
             document.getElementById('installButton').removeAttribute('disabled')
             return null
         }
+    } else if (modpackVersion === null) {
+        console.log('Unlocking button without auto-updater...')
+        document.getElementById('installButton').disabled = false
     }
 }

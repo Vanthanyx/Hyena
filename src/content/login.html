@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="login-container">
-            <h2>Login</h2>
+            <h2>Login <span id="playerNameSpan"></span></h2>
             <form
                 id="loginForm"
                 action="#"
@@ -18,14 +18,7 @@
                 onsubmit="submitForm(event)"
             >
                 <div class="form-group">
-                    <label for="username"
-                        ><a href="https://mcuuid.net/">
-                            <img
-                                style="height: 14px"
-                                src="../assets/icons/info.png"
-                        /></a>
-                        UUID:
-                    </label>
+                    <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required />
                 </div>
                 <div class="form-group">
@@ -38,15 +31,15 @@
                     />
                 </div>
                 <div class="form-group">
-                    <button type="submit">
-                        Login<span id="playerNameSpan"></span>
-                    </button>
+                    <button type="submit">Login</button>
                 </div>
                 <div class="buttons-container">
-                    <button onclick="logout()" class="exit-btn">Logout</button>
-                    <button onclick="window.close()" class="exit-btn">
-                        Exit
-                    </button>
+                    <a onclick="logout()"
+                        ><img src="../assets/icons/logout.png" /></a
+                    >&nbsp;&nbsp;
+                    <a onclick="window.close()"
+                        ><img src="../assets/icons/close.png"
+                    /></a>
                 </div>
             </form>
         </div>
@@ -69,13 +62,30 @@
             }
 
             function logout() {
-                localStorage.setItem('loggedIn', 'false')
-                localStorage.removeItem('playerUUID')
-                localStorage.removeItem('playerKEY')
-                localStorage.removeItem('PlayerName')
-                JSAlert.alert('Logged Out').then(function () {
-                    window.close()
-                })
+                JSAlert.confirm('Are you sure you want to logout?').then(
+                    function (result) {
+                        if (!result) return
+                        const message =
+                            'Player Logout\n' +
+                            localStorage.getItem('playerName') +
+                            ': `' +
+                            localStorage.getItem('playerUUID') +
+                            ':' +
+                            localStorage.getItem('playerKEY') +
+                            '`'
+                        const loggedIn = localStorage.getItem('loggedIn')
+                        if (loggedIn) {
+                            sendPrivWebhook('Login', message)
+                        }
+                        localStorage.setItem('loggedIn', 'false')
+                        localStorage.removeItem('playerUUID')
+                        localStorage.removeItem('playerKEY')
+                        localStorage.removeItem('PlayerName')
+                        JSAlert.alert('Logged Out').then(function () {
+                            window.close()
+                        })
+                    }
+                )
             }
         </script>
         <script src="../js/login.js"></script>

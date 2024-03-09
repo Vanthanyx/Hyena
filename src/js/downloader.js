@@ -28,7 +28,11 @@ async function downloadFile(url, folderPath) {
                         "Please wait, we're processing your request..."
                     ).dismissIn(4000)
                     setTimeout(function () {
-                        document.getElementById('downloadProgress').remove()
+                        let downloadProgress =
+                            document.getElementById('downloadProgress')
+                        if (downloadProgress) {
+                            downloadProgress.remove()
+                        }
                     }, 5000)
                 }
             },
@@ -62,8 +66,11 @@ async function downloadFile(url, folderPath) {
             setTimeout(() => {
                 JSAlert.alert('Download complete!')
                 document.getElementById('installButton').disabled = true
-                const progressBar = document.getElementById('downloadProgress')
-                progressBar.remove()
+                let downloadProgress =
+                    document.getElementById('downloadProgress')
+                if (downloadProgress) {
+                    downloadProgress.remove()
+                }
                 document.getElementById('raptorIcon').src =
                     './assets/icons/rhombus.png'
             }, 3000)
