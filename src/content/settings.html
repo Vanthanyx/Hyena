@@ -102,39 +102,24 @@
                             <option disabled>(Auto Loops To Self)</option>
                         </optgroup>
                         <optgroup label="Google Servers">
-                            <option>G-Main (San Fran.)</option>
-                            <option>G-Backup (San Fran.)</option>
+                            <option>GOOGLE-1 (NA-West)</option>
+                            <option>GOOGLE-2 (NA-West)</option>
                         </optgroup>
-                        <optgroup label="US Regions" disabled>
-                            <option>US-Central (Texas)</option>
-                            <!--136.50.17.105-->
-                            <option>US-East (Atlanta)</option>
-                            <!--136.55.243.230-->
-                            <option disabled>US-North (Seattle)</option>
-                            <option disabled>US-South (Miami)</option>
-                            <option>US-West (Los Angeles)</option>
-                            <!--136.52.219.28-->
+                        <optgroup label="Amazon Servers">
+                            <option>AMAZON-1 (NA-East)</option>
+                            <option>AMAZON-2 (NA-East)</option>
+                            <option>AMAZON-3 (NA-East)</option>
+                            <option>AMAZON-4 (NA-East)</option>
                         </optgroup>
-                        <optgroup label="EU Regions" disabled>
-                            <option>EU-Central (Frankfurt)</option>
-                            <option>EU-East (Moscow)</option>
-                            <option>EU-North (Stockholm)</option>
-                            <option>EU-South (Rome)</option>
-                            <option>EU-West (London)</option>
+                        <optgroup label="Cloudfare Servers">
+                            <option>CLOUDFARE-1 (OC-Central)</option>
+                            <option>CLOUDFARE-2 (OC-Central)</option>
                         </optgroup>
-                        <optgroup label="AS Regions" disabled>
-                            <option>AS-Central (Singapore)</option>
-                            <option>AS-East (Tokyo)</option>
-                            <option>AS-North (Seoul)</option>
-                            <option>AS-South (Mumbai)</option>
-                            <option>AS-West (Dubai)</option>
-                        </optgroup>
-                        <optgroup label="OC Regions" disabled>
-                            <option>OC-Central (Sydney)</option>
-                        </optgroup>
-                        <optgroup label="SA Regions" disabled>
-                            <option>SA-Central (Santiago)</option>
-                            <option>SA-North (Sao Paulo)</option>
+                        <optgroup label="Quad9 Servers">
+                            <option>QUAD9-1 (EU-Central)</option>
+                            <option disabled>QUAD9-2 (EU-Central)</option>
+                            <option disabled>QUAD9-3 (EU-Central)</option>
+                            <option disabled>QUAD9-4 (EU-Central)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -226,12 +211,32 @@
 
                 console.log('Server region set to: ', selectedOption)
                 localStorage.setItem('serverRegion', selectedOption)
-                if (selectedOption.includes('Main')) {
+                if (selectedOption.includes('GOOGLE-1')) {
                     localStorage.setItem('pingAddress', '8.8.8.8')
-                } else if (selectedOption.includes('Backup')) {
+                } else if (selectedOption.includes('GOOGLE-2')) {
                     localStorage.setItem('pingAddress', '8.8.4.4')
                 } else if (selectedOption.includes('Auto')) {
                     localStorage.setItem('pingAddress', '127.0.0.1')
+                } else if (selectedOption.includes('AMAZON-1')) {
+                    localStorage.setItem('pingAddress', '205.251.192.0')
+                } else if (selectedOption.includes('AMAZON-2')) {
+                    localStorage.setItem('pingAddress', '205.251.194.0')
+                } else if (selectedOption.includes('AMAZON-3')) {
+                    localStorage.setItem('pingAddress', '205.251.196.0')
+                } else if (selectedOption.includes('AMAZON-4')) {
+                    localStorage.setItem('pingAddress', '205.251.198.0')
+                } else if (selectedOption.includes('CLOUDFARE-1')) {
+                    localStorage.setItem('pingAddress', '1.1.1.1')
+                } else if (selectedOption.includes('CLOUDFARE-2')) {
+                    localStorage.setItem('pingAddress', '1.0.0.1')
+                } else if (selectedOption.includes('QUAD9-1')) {
+                    localStorage.setItem('pingAddress', '9.9.9.9')
+                } else if (selectedOption.includes('QUAD9-2')) {
+                    localStorage.setItem('pingAddress', '9.9.9.8')
+                } else if (selectedOption.includes('QUAD9-3')) {
+                    localStorage.setItem('pingAddress', '9.9.9.6')
+                } else if (selectedOption.includes('QUAD9-4')) {
+                    localStorage.setItem('pingAddress', '9.9.9.4')
                 }
             }
 

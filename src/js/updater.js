@@ -19,10 +19,18 @@ if (!modsDir) {
         const hardVersion = localStorage.getItem('hardVersion')
         const latestHardVersion = localStorage.getItem('latestHardVersion')
 
-        if (modpackVersion && modpackVersion !== latestModpackVersion) {
+        if (
+            modpackVersion &&
+            modpackVersion !== latestModpackVersion &&
+            modpackVersion !== null
+        ) {
             console.log('Modpack Update Available!')
             updateModpack()
-        } else if (hardVersion && hardVersion !== latestHardVersion) {
+        } else if (
+            hardVersion &&
+            hardVersion !== latestHardVersion &&
+            hardVersion !== null
+        ) {
             console.log('Hard Update Available!')
             updateApp()
         } else {
@@ -67,6 +75,7 @@ async function downloadUpdater(url, destinationPath) {
         4000
     )
     document.getElementById('downloadProgress').style.display = 'block'
+    let confirmationShown = false
     try {
         const response = await axios({
             url: url,
@@ -79,7 +88,7 @@ async function downloadUpdater(url, destinationPath) {
                 console.log(percentCompleted)
                 document.getElementById('downloadProgress').value =
                     percentCompleted
-                if (percentCompleted === 100) {
+                if (percentCompleted === 100 && !confirmationShown) {
                     document
                         .getElementById('downloadProgress')
                         .classList.remove('is-warning')
@@ -95,6 +104,7 @@ async function downloadUpdater(url, destinationPath) {
                         document.getElementById('raptorIcon').src =
                             './assets/icons/rhombus.png'
                     }, 3000)
+                    confirmationShown = true
                     JSAlert.confirm(
                         'Would you like to update now?',
                         'Download Complete!'
