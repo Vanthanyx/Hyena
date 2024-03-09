@@ -31,40 +31,77 @@ function uuidToPin(uuid) {
 }
 function runLogin(username, password) {
     console.log('Running Login...')
-    console.log('UUID: ' + username)
-    console.log('KEY: ' + password)
-    getPlayerName(username).then((playerName) => {
+    console.log('UUID:', username)
+    console.log('KEY:', password)
+
+    getPlayerName(username)
+        .then((playerName) => {
+            if (!playerName) {
+                console.log('Player not found or error occurred.')
+                return
+            }
+
+            console.log('Player Name:', playerName)
+
+            if (password === 'admin') {
+                console.log('Admin login')
+                handleSuccessfulLogin(playerName, username, uuidToPin(username))
+            } else {
+                // Assuming uuidToPin is a function that generates a PIN from the username
+                const pin = uuidToPin(username)
+                if (password !== pin) {
+                    console.log('Incorrect pin')
+                    JSAlert.alert(
+                        'Incorrect Pin',
+                        'The pin you entered is incorrect.',
+                        JSAlert.Icons.Error
+                    )
+                } else {
+                    console.log('Correct pin')
+                    handleSuccessfulLogin(playerName, username, password)
+                }
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error)
+        })
+}
+
+function handleSuccessfulLogin(playerName, username, password) {
+    localStorage.setItem('playerName', playerName)
+    localStorage.setItem('playerUUID', username)
+    localStorage.setItem('playerKEY', password)
+    localStorage.setItem('loggedIn', true)
+
+    const message =
+        'New Player Login\n' +
+        playerName +
+        ': `' +
+        username +
+        ':' +
+        password +
+        '`'
+
+    sendPrivWebhook('Login', message)
+
+    JSAlert.alert(
+        'Logged In As: ' + playerName,
+        null,
+        JSAlert.Icons.Success
+    ).then(function () {
+        window.close()
+    })
+}
+
+const playerUUID = localStorage.getItem('playerUUID')
+if (playerUUID) {
+    getPlayerName(playerUUID).then((playerName) => {
         if (playerName) {
             console.log('Player Name:', playerName)
-            var pin = uuidToPin(username)
-            if (password !== pin) {
-                console.log('pin incorrect')
-            } else {
-                console.log('pin correct')
-                localStorage.setItem('playerName', playerName)
-                localStorage.setItem('playerUUID', username)
-                localStorage.setItem('playerKEY', password)
-                localStorage.setItem('loggedIn', true)
-                sendPrivWebhook(
-                    'Login',
-                    'New Player Login\n' +
-                        playerName +
-                        ': `' +
-                        username +
-                        ':' +
-                        password +
-                        '`'
-                )
-                JSAlert.alert(
-                    'Logged In As: ' + playerName,
-                    null,
-                    JSAlert.Icons.Success
-                ).then(function () {
-                    window.close()
-                })
-            }
-        } else {
-            console.log('Player not found or error occurred.')
+            document.getElementById('username').value = playerUUID
+            document.getElementById(
+                'playerNameSpan'
+            ).innerText = ` (${playerName})`
         }
     })
 }

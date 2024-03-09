@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RAPTOR OFFLINE</title>
+        <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+            * {
+                font-family: 'JetBrains Mono', monospace;
+                overflow: hidden !important;
+                color: #242230;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #ded9fe;
+            }
+
+            a:hover {
+                cursor: pointer;
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 25px;
+            }
+
+            .card {
+                background-color: #bdb2ff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                text-align: center;
+                display: flex; /* Add flex display */
+                flex-direction: column; /* Set flex direction to column */
+                align-items: center; /* Center items horizontally */
+            }
+
+            .status-text {
+                font-size: 18px;
+                display: inline-block;
+            }
+
+            h1 {
+                font-size: 36px;
+                margin-top: 15px;
+                margin-bottom: -18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <img src="../assets/icons/spin.gif" />
+            <h1>APP OFFLINE</h1>
+            <p class="status-text">API Connection Failed</p>
+            <a onclick="window.close()"
+                ><img
+                    style="height: 25px; width: 25px"
+                    src="../assets/icons/close.png"
+            /></a>
+        </div>
+    </body>
+    <script>
+        const offlineReason = localStorage.getItem('offlineReason')
+        JSAlert.loader(
+            '<code>503 Service Unavailable<br>API Servers Not Responding</code>'
+        ).dismissIn(5000)
+        if (offlineReason !== null) {
+            setTimeout(() => {
+                JSAlert.alert(
+                    offlineReason,
+                    'Connection Unavailable',
+                    JSAlert.Icons.Failed
+                ).then(() => {
+                    localStorage.removeItem('offlineReason')
+                })
+            }, 6000)
+        }
+    </script>
+</html>

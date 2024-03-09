@@ -1,8 +1,6 @@
-const path = require('path')
-const axios = require('axios')
-const JSZip = require('jszip')
-
 async function downloadFile(url, folderPath) {
+    setIcon()
+    setupModsFolder()
     try {
         if (!url || typeof url !== 'string' || !url.startsWith('http')) {
             throw new Error('Invalid URL provided.')
@@ -22,13 +20,15 @@ async function downloadFile(url, folderPath) {
                     document
                         .getElementById('downloadProgress')
                         .classList.add('is-success')
+                    const latestModpackVersion = localStorage.getItem(
+                        'latestModpackVersion'
+                    )
+                    localStorage.setItem('modpackVersion', latestModpackVersion)
                     JSAlert.loader(
                         "Please wait, we're processing your request..."
                     ).dismissIn(4000)
                     setTimeout(function () {
-                        document.getElementById(
-                            'downloadProgress'
-                        ).removeAttribute
+                        document.getElementById('downloadProgress').remove()
                     }, 5000)
                 }
             },
@@ -61,8 +61,11 @@ async function downloadFile(url, folderPath) {
             console.log('No occurrences of "503" found in console.')
             setTimeout(() => {
                 JSAlert.alert('Download complete!')
+                document.getElementById('installButton').disabled = true
                 const progressBar = document.getElementById('downloadProgress')
                 progressBar.remove()
+                document.getElementById('raptorIcon').src =
+                    './assets/icons/rhombus.png'
             }, 3000)
         }
     } catch (error) {
@@ -100,11 +103,49 @@ async function unzipFile(zipFilePath, targetFolder) {
 }
 
 function searchConsoleFor503() {
-    const logs = console.history || [] // Check if console.history is available
+    const logs = console.history || []
 
     const foundLogs = logs.filter((log) => {
+        JSAlert.alert(
+            'The server is currently unavailable.',
+            '503 Error',
+            JSAlert.Icons.Failed,
+            'Trying Later...'
+        )
         return log.message && log.message.includes('503')
     })
 
     return foundLogs.length > 0 ? foundLogs : null
+}
+
+function setupModsFolder() {
+    const modsDir = localStorage.getItem('modsDir')
+    const storageSubDir = path.join(modsDir, '.raptorStorage')
+
+    if (!fs.existsSync(storageSubDir)) {
+        fs.mkdirSync(storageSubDir, { recursive: true })
+    }
+
+    fs.readdir(modsDir, (err, files) => {
+        if (err) {
+            console.error('Error reading directory:', err)
+            return
+        }
+
+        files = files.filter(
+            (file) => file !== '.raptorStorage' && file !== '.RDS.json'
+        )
+
+        // Move each file into the .raptorStorage subfolder
+        files.forEach((file) => {
+            const sourcePath = path.join(modsDir, file)
+            const destinationPath = path.join(storageSubDir, file)
+
+            fs.rename(sourcePath, destinationPath, (err) => {
+                if (err) {
+                    console.error('Error moving file:', err)
+                }
+            })
+        })
+    })
 }

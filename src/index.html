@@ -6,10 +6,11 @@
         <title>Raptor</title>
         <link rel="stylesheet" href="./css/index.css" />
         <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
+        <script src="./js/.imports.js"></script>
     </head>
     <body>
         <div class="titlebar"></div>
-        <div>
+        <div id="holo">
             <div class="rainbow"></div>
             <div class="rainbow"></div>
             <div class="rainbow"></div>
@@ -41,12 +42,13 @@
         <section class="section">
             <div class="container">
                 <h1 class="title has-text-centered">
-                    Raptor
+                    RRAPTOR
                     <img
-                        src="./assets/icons/raptor_alt.png"
+                        id="raptorIcon"
+                        src="./assets/icons/rhombus.png"
                         style="width: 45px; height: 45px"
                     />
-                    Update
+                    UPDATER
                     <div class="menu">
                         <a href="./content/settings.html"
                             ><img
@@ -64,21 +66,21 @@
                     <button
                         onclick="synchronize()"
                         id="reload2"
-                        class="button is-info is-light"
+                        class="button is-link is-light"
                     >
-                        Synchronize Data
+                        Sync App Data
                     </button>
                     <button
                         onclick="reloadApp()"
                         id="reload1"
-                        class="button is-info is-light"
+                        class="button is-link is-light"
                     >
                         Reload Cache
                     </button>
                     <br />
                     <button
                         style="margin-top: 10px"
-                        class="button is-success"
+                        class="button is-success is-rounded is-light"
                         onclick="downloadFilesHTML()"
                         id="installButton"
                         disabled

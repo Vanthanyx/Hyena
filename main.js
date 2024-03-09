@@ -7,12 +7,16 @@ const createWindow = () => {
         width: 915,
         height: 575,
         frame: false,
-        icon: path.join(__dirname, 'src/assets/icons/raptor.png'),
+        icon: path.join(__dirname, 'src/assets/icons/rhombus_blue.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
             preload: path.join(__dirname, 'preload.js'),
+            // Set the default download directory here
+            download: {
+                defaultDirectory: 'Downloads',
+            },
         },
     })
 
@@ -31,7 +35,7 @@ const createWindow = () => {
             width: 400,
             height: 400,
             frame: false,
-            icon: path.join(__dirname, 'src/assets/icons/raptor.png'),
+            icon: path.join(__dirname, 'src/assets/icons/rhombus.png'),
             webPreferences: {
                 nodeIntegration: true,
             },

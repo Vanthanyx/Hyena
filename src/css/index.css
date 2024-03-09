@@ -63,8 +63,8 @@
     -webkit-app-region: drag;
     width: 100%;
     height: 15px; /* Adjust as needed */
-    background-color: #00f;
-    color: #00f;
+    background-color: #ddd;
+    color: #ddd;
     font-size: 12px;
     display: flex;
     align-items: center;

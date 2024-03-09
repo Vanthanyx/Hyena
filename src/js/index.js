@@ -24,6 +24,11 @@ const jsonURL =
     'https://raw.githubusercontent.com/Vanthanyx/Raptor/master/cdn/database.json'
 webDBFetch(jsonURL)
 
+const appStatus = localStorage.getItem('status')
+if (appStatus === 'offline') {
+    window.location.href = './content/offline.html'
+}
+
 function openTestingWindow() {
     window.location.href = 'content/testing.html'
 }

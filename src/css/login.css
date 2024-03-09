@@ -44,6 +44,11 @@ body {
 .form-group button:hover {
     background-color: #0056b3;
 }
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .exit-btn {
     background-color: #ff5050;
     color: white;
@@ -52,6 +57,4 @@ body {
     font-size: 12px;
     border: none;
     cursor: pointer;
-    display: flex;
-    margin: auto;
 }

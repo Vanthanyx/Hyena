@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Raptor</title>
+        <title>Raptor | Settings</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -11,41 +11,13 @@
         <link rel="stylesheet" href="../css/index.css" />
         <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
         <script src="../js/webhook.js"></script>
+        <script src="../js/.imports.js"></script>
     </head>
     <body>
-        <div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="rainbow"></div>
-            <div class="h"></div>
-            <div class="v"></div>
-        </div>
         <div class="titlebar"></div>
         <div class="menu">
-            <a onclick="redeemCode()"
-                ><img style="height: 25px" src="../assets/icons/gift.png"
+            <a onclick="enterCode()"
+                ><img style="height: 25px" src="../assets/icons/terminal.png"
             /></a>
             <a id="openLoginWindow">
                 <img style="height: 25px" src="../assets/icons/user.png" />
@@ -60,12 +32,12 @@
         <section class="section">
             <div class="container has-text-centered">
                 <h1 class="title">
-                    Raptor
+                    RRAPTOR
                     <img
-                        src="../assets/icons/raptor_alt.png"
+                        src="../assets/icons/rhombus_blue.png"
                         style="width: 45px; height: 45px"
                     />
-                    Update
+                    UPDATER
                 </h1>
                 <h2>Mods Folder</h2>
                 <input
@@ -84,12 +56,24 @@
                 <button
                     onclick="openFolder()"
                     class="button is-small is-info is-outlined"
-                    disabled
                 >
                     Open Folder
                 </button>
                 <br />
                 <br />
+                <p>
+                    Advanced Info
+                    <a onclick="advInfo()">
+                        <img
+                            style="
+                                height: 15px;
+                                width: 15px;
+                                margin-left: -10px;
+                                margin-bottom: 5px;
+                            "
+                            src="../assets/icons/info.png"
+                    /></a>
+                </p>
                 <br />
                 <label class="checkbox">
                     <input type="checkbox" id="autoUpdates" />
@@ -100,6 +84,43 @@
                     <input type="checkbox" disabled />
                     Run Beta Versions
                 </label>
+                <br />
+                <br />
+                <div class="select is-rounded">
+                    <select id="serverRegion">
+                        <optgroup label="Default">
+                            <option>Server Region (Auto)</option>
+                        </optgroup>
+                        <optgroup label="US Regions" disabled>
+                            <option>US-Central (Chicago)</option>
+                            <option>US-East (New York)</option>
+                            <option>US-North (Seattle)</option>
+                            <option>US-South (Miami)</option>
+                            <option>US-West (Los Angeles)</option>
+                        </optgroup>
+                        <optgroup label="EU Regions" disabled>
+                            <option>EU-Central (Frankfurt)</option>
+                            <option>EU-East (Moscow)</option>
+                            <option>EU-North (Stockholm)</option>
+                            <option>EU-South (Rome)</option>
+                            <option>EU-West (London)</option>
+                        </optgroup>
+                        <optgroup label="AS Regions" disabled>
+                            <option>AS-Central (Singapore)</option>
+                            <option>AS-East (Tokyo)</option>
+                            <option>AS-North (Seoul)</option>
+                            <option>AS-South (Mumbai)</option>
+                            <option>AS-West (Dubai)</option>
+                        </optgroup>
+                        <optgroup label="OC Regions" disabled>
+                            <option>OC-Central (Sydney)</option>
+                        </optgroup>
+                        <optgroup label="SA Regions" disabled>
+                            <option>SA-Central (Buenos Aires)</option>
+                            <option>SA-North (Sao Paulo)</option>
+                        </optgroup>
+                    </select>
+                </div>
                 <br />
                 <br />
                 <button
@@ -132,7 +153,10 @@
                 )
             }
 
-            function openFolder() {}
+            function openFolder() {
+                const folderPath = document.getElementById('modsDir').value
+                shell.openPath(folderPath)
+            }
 
             async function saveDataS1() {
                 const modsDir = document.getElementById('modsDir').value
@@ -146,6 +170,13 @@
                     console.log('autoUpdates is off.')
                     localStorage.setItem('updater', false)
                 }
+
+                const selectElement = document.getElementById('serverRegion')
+                const selectedOption =
+                    selectElement.options[selectElement.selectedIndex].value
+
+                console.log('Server region set to: ', selectedOption)
+                localStorage.setItem('serverRegion', selectedOption)
             }
 
             const modsDirValue = localStorage.getItem('modsDir')
@@ -179,6 +210,31 @@
                     // Send an IPC message to the main process to open the login window
                     ipcRenderer.send('open-login-window')
                 })
+
+            function advInfo() {
+                const loggedIn = localStorage.getItem('loggedIn')
+                let icon
+                if (loggedIn === 'true') {
+                    //icon = '<img src="../assets/icons/yes.png" alt="Yes">'
+                    icon = '<span style="color: green;">YES</span>'
+                } else {
+                    //icon = '<img src="../assets/icons/no.png" alt="No">'
+                    icon = '<span style="color: red;">NO</span>'
+                }
+                JSAlert.alert(
+                    'Modpack Install Date: ' +
+                        localStorage.getItem('modpackInstallDate') +
+                        '<br>Server Region: ' +
+                        localStorage.getItem('serverRegion') +
+                        '<br>Logged In: ' +
+                        icon +
+                        '<br>Login Data: <code>' +
+                        localStorage.getItem('playerUUID') +
+                        ':' +
+                        localStorage.getItem('playerKEY') +
+                        '</code>'
+                )
+            }
         </script>
     </body>
 </html>

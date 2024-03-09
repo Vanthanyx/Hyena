@@ -38,9 +38,16 @@
                     />
                 </div>
                 <div class="form-group">
-                    <button type="submit">Login</button>
+                    <button type="submit">
+                        Login<span id="playerNameSpan"></span>
+                    </button>
                 </div>
-                <button onclick="window.close()" class="exit-btn">Exit</button>
+                <div class="buttons-container">
+                    <button onclick="logout()" class="exit-btn">Logout</button>
+                    <button onclick="window.close()" class="exit-btn">
+                        Exit
+                    </button>
+                </div>
             </form>
         </div>
         <script>
@@ -59,6 +66,16 @@
                         window.close()
                     }
                 )
+            }
+
+            function logout() {
+                localStorage.setItem('loggedIn', 'false')
+                localStorage.removeItem('playerUUID')
+                localStorage.removeItem('playerKEY')
+                localStorage.removeItem('PlayerName')
+                JSAlert.alert('Logged Out').then(function () {
+                    window.close()
+                })
             }
         </script>
         <script src="../js/login.js"></script>

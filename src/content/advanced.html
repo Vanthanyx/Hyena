@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Raptor | Advanced</title>
+        <link rel="stylesheet" href="../css/index.css" />
+        <script src="https://unpkg.com/js-alert/dist/jsalert.min.js"></script>
+        <script src="../js/.imports.js"></script>
+    </head>
+    <body>
+        <div class="titlebar"></div>
+        <section class="section">
+            <div class="container">
+                <h1 id="title" class="title has-text-centered">
+                    RRAPTOR
+                    <img
+                        id="raptorIcon"
+                        src="../assets/icons/rhombus_green.png"
+                        style="width: 45px; height: 45px"
+                    />
+                    UPDATER
+                    <div class="menu">
+                        <a href="../index.html"
+                            ><img
+                                style="height: 25px"
+                                src="../assets/icons/home.png"
+                        /></a>
+                        <a onclick="window.close()"
+                            ><img
+                                style="height: 25px"
+                                src="../assets/icons/close.png"
+                        /></a>
+                    </div>
+                </h1>
+                <div class="has-text-centered">
+                    <button
+                        id="setKey"
+                        class="button is-info"
+                        onclick="setKey()"
+                        disabled
+                    >
+                        Set Key
+                    </button>
+                    <button onclick="repair()" class="button is-warning">
+                        Repair
+                    </button>
+                    <button onclick="uninstall()" class="button is-danger">
+                        Uninstall
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="copyright">&copy; 2024 RAPTOR.</div>
+        <script>
+            function setKey() {
+                JSAlert.prompt('Enter Your Key:', 'KEY-XXXX').then(function (
+                    result
+                ) {
+                    if (!result) return
+                    const key = result
+                    JSAlert.prompt(
+                        `Enter Value For ${key}:`,
+                        'VALUE-XXXX'
+                    ).then(function (result) {
+                        if (!result) return
+                        const value = result
+                        localStorage.setItem(key, value)
+                        JSAlert.alert(
+                            `Key: ${key}<br>Value: ${value}<br><br>Key-Value Pair Set`
+                        )
+                    })
+                })
+            }
+
+            function repair() {
+                JSAlert.confirm(
+                    'Are You Sure You Want To Repair?<br>This Will Delete 90% Of Data And<br>Everything In the Mods Folder!'
+                ).then(function (result) {
+                    if (result) {
+                        const modsDir = localStorage.getItem('modsDir')
+                        deleteFolderRecursive(modsDir)
+
+                        function deleteFolderRecursive(folderPath) {
+                            if (fs.existsSync(folderPath)) {
+                                fs.readdirSync(folderPath).forEach((file) => {
+                                    const curPath = path.join(folderPath, file)
+                                    if (fs.lstatSync(curPath).isDirectory()) {
+                                        deleteFolderRecursive(curPath)
+                                    } else {
+                                        fs.unlinkSync(curPath)
+                                    }
+                                })
+                            }
+                        }
+
+                        const updater = localStorage.getItem('updater')
+                        const playerUUID = localStorage.getItem('playerUUID')
+                        const playerKEY = localStorage.getItem('playerKEY')
+                        localStorage.clear()
+                        localStorage.setItem('modsDir', modsDir)
+                        localStorage.setItem('updater', updater)
+                        localStorage.setItem('playerUUID', playerUUID)
+                        localStorage.setItem('playerKEY', playerKEY)
+                        JSAlert.alert('Repair Complete')
+                    }
+                })
+            }
+
+            let keysPressed = ''
+
+            function handleKeyDown(event) {
+                keysPressed += event.key.toLowerCase()
+                if (keysPressed.endsWith('unl')) {
+                    document.getElementById('raptorIcon').src =
+                        '../assets/icons/rhombus_red.png'
+                    document.getElementById('setKey').disabled = false
+                    document.getElementById('title').style.color = 'red'
+                    JSAlert.alert('Key Setter Unlocked', 'DANGER')
+                } else if (keysPressed.endsWith('lock')) {
+                    document.getElementById('raptorIcon').src =
+                        '../assets/icons/rhombus_green.png'
+                    document.getElementById('setKey').disabled = true
+                    document.getElementById('title').style.color = 'black'
+                    JSAlert.alert('Key Setter Locked', 'SAFE')
+                }
+            }
+            document.addEventListener('keydown', handleKeyDown)
+
+            function uninstall() {
+                JSAlert.alert("This Feature Isn't Ready Yet")
+            }
+
+            function uninstallTest() {
+                JSAlert.confirm(
+                    'Are You Sure You Want To Uninstall?<br>This Will Delete 100% Of Data And<br>Everything In the Mods Folder!'
+                ).then(function (result) {
+                    if (result) {
+                        const modsDir = localStorage.getItem('modsDir')
+                        deleteFolderRecursive(modsDir)
+
+                        function deleteFolderRecursive(folderPath) {
+                            if (fs.existsSync(folderPath)) {
+                                fs.readdirSync(folderPath).forEach((file) => {
+                                    const curPath = path.join(folderPath, file)
+                                    if (fs.lstatSync(curPath).isDirectory()) {
+                                        deleteFolderRecursive(curPath)
+                                    } else {
+                                        fs.unlinkSync(curPath)
+                                    }
+                                })
+                                fs.rmdirSync(folderPath)
+                            }
+                        }
+
+                        localStorage.clear()
+                        JSAlert.alert('Uninstall Complete')
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
