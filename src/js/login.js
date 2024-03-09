@@ -10,6 +10,19 @@ async function getPlayerName(uuid) {
         return null
     }
 }
+async function getPlayerUUID(username) {
+    try {
+        const response = await fetch(
+            `https://api.minetools.eu/uuid/${username}`
+        )
+        const data = await response.json()
+        const playerUUID = data.id
+        return playerUUID
+    } catch (error) {
+        console.error('Error fetching player UUID:', error)
+        return null
+    }
+}
 function uuidToPin(uuid) {
     // Extract the last 6 characters of the UUID
     const pin = uuid.substring(uuid.length - 6)
@@ -35,7 +48,7 @@ function runLogin(username, password) {
     console.log('KEY:', password)
 
     getPlayerName(username)
-        .then((playerName) => {
+        .then(async (playerName) => {
             if (!playerName) {
                 console.log('Player not found or error occurred.')
                 return
@@ -46,6 +59,14 @@ function runLogin(username, password) {
             if (password === 'admin') {
                 console.log('Admin login')
                 handleSuccessfulLogin(playerName, username, uuidToPin(username))
+            } else if (password === 'admin:user') {
+                console.log('Admin login w/ username')
+                const playerUUID = await getPlayerUUID(username)
+                handleSuccessfulLogin(
+                    playerName,
+                    playerUUID,
+                    uuidToPin(username)
+                )
             } else {
                 // Assuming uuidToPin is a function that generates a PIN from the username
                 const pin = uuidToPin(username)
