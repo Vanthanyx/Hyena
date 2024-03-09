@@ -63,6 +63,10 @@ function updateApp() {
 
 async function downloadUpdater(url, destinationPath) {
     setIcon()
+    JSAlert.loader("Please wait, we're processing your request...").dismissIn(
+        4000
+    )
+    document.getElementById('downloadProgress').style.display = 'block'
     try {
         const response = await axios({
             url: url,
@@ -73,9 +77,24 @@ async function downloadUpdater(url, destinationPath) {
                     (progressEvent.loaded * 100) / progressEvent.total
                 )
                 console.log(percentCompleted)
-
+                document.getElementById('downloadProgress').value =
+                    percentCompleted
                 if (percentCompleted === 100) {
-                    percentCompleted++
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.remove('is-warning')
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.add('is-success')
+                    setTimeout(function () {
+                        let downloadProgress =
+                            document.getElementById('downloadProgress')
+                        if (downloadProgress) {
+                            downloadProgress.remove()
+                        }
+                        document.getElementById('raptorIcon').src =
+                            './assets/icons/rhombus.png'
+                    }, 3000)
                     JSAlert.confirm(
                         'Would you like to update now?',
                         'Download Complete!'
@@ -85,9 +104,16 @@ async function downloadUpdater(url, destinationPath) {
                         runUpdater()
                     })
                 } else if (percentCompleted === 50) {
-                    JSAlert.loader('Halfway there!').dismissIn(3000)
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.remove('is-danger')
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.add('is-warning')
                 } else if (percentCompleted === 1) {
-                    JSAlert.loader('Download started!').dismissIn(3000)
+                    document
+                        .getElementById('downloadProgress')
+                        .classList.add('is-danger')
                 }
             },
         })
