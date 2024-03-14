@@ -18,20 +18,11 @@
                 onsubmit="submitForm(event)"
             >
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">StarCode:</label>
                     <input type="text" id="username" name="username" required />
                 </div>
                 <div class="form-group">
-                    <label for="password">Auth Key:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required
-                    />
-                </div>
-                <div class="form-group">
-                    <button type="submit">Login</button>
+                    <button onclick="starcode()" type="submit">Login</button>
                 </div>
                 <div class="buttons-container">
                     <a onclick="logout()"
@@ -44,13 +35,6 @@
             </form>
         </div>
         <script>
-            function submitForm(event) {
-                event.preventDefault() // Prevent form submission
-                const form = document.getElementById('loginForm')
-                const username = form.username.value
-                const password = form.password.value
-                runLogin(username, password)
-            }
             var loggedIn = localStorage.getItem('loggedIn')
             if (loggedIn === 'true') {
                 JSAlert.confirm('You are already loggged in, Exit?').then(
@@ -86,6 +70,54 @@
                         })
                     }
                 )
+            }
+
+            function starcode() {
+                var result = document.getElementById('username').value
+
+                var parts = result.split(':')
+
+                if (parts.length === 2) {
+                    var SN = parts[0].trim() // Serial Number
+                    var PIN = parts[1].trim() // PIN
+
+                    JSAlert.loader(
+                        `Searching For SN(${SN}) PIN(${PIN})`
+                    ).dismissIn(2000)
+
+                    // Call the function to check the database
+                    checkDatabase(SN, PIN)
+                        .then((results) => {
+                            // Process the results here
+                            if (results.length > 0) {
+                                // Matching entry found
+                                console.log('Matching entry found:', results)
+                                JSAlert.loader(
+                                    `Logging in ${results[0].username}...`
+                                ).dismissIn(6000)
+
+                                localStorage.setItem('SN', SN)
+                                localStorage.setItem('PIN', PIN)
+
+                                handleSuccessfulLogin(
+                                    results[0].username,
+                                    results[0].uuid,
+                                    uuidToPin(results[0].uuid)
+                                )
+                            } else {
+                                // No matching entry found
+                                JSAlert.alert('No matching login found.')
+                            }
+                        })
+                        .catch((error) => {
+                            JSAlert.alert('Error querying the database:', error)
+                        })
+                } else {
+                    // Handle incorrect input format
+                    console.error(
+                        "Incorrect input format. Please enter data in the format 'SN:PIN'."
+                    )
+                }
             }
         </script>
         <script src="../js/login.js"></script>

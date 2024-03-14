@@ -48,8 +48,9 @@ if (securityURL !== null) {
 }
 
 const appStatus = localStorage.getItem('status')
+const bypassStatus = localStorage.getItem('bypassOffline')
 function checkStatus() {
-    if (appStatus === 'offline') {
+    if (appStatus === 'offline' && bypassStatus !== 'enabled') {
         window.location.href = './content/offline.html'
     }
 }

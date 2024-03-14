@@ -24,6 +24,7 @@
         "axios": "^1.6.7",
         "electron-download-manager": "^2.1.2",
         "electron-squirrel-startup": "^1.0.0",
-        "jszip": "^3.10.1"
+        "jszip": "^3.10.1",
+        "mysql": "^2.18.1"
     }
 }

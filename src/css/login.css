@@ -55,3 +55,14 @@ img {
     display: flex;
     justify-content: center;
 }
+.subtext {
+    font-size: 12px;
+    margin-top: -6px;
+    margin-bottom: 1px;
+    text-decoration: underline;
+    color: #666;
+}
+.subtext:hover {
+    cursor: pointer;
+    color: rgb(45, 45, 180);
+}

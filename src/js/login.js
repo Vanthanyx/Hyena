@@ -45,52 +45,6 @@ function uuidToPin(uuid) {
     return pinWithNumbers
 }
 
-function runLogin(username, password) {
-    console.log('Running Login...')
-    console.log('Username:', username)
-    console.log('KEY:', password)
-
-    getPlayerUUID(username)
-        .then(async (playerUUID) => {
-            if (!playerUUID) {
-                console.log('Player not found or error occurred.')
-                return
-            }
-
-            console.log('Player UUID:', playerUUID)
-
-            if (password === 'admin') {
-                console.log('Admin login')
-                handleSuccessfulLogin(username, playerUUID, uuidToPin(username))
-            } else if (password === 'admin:user') {
-                console.log('Admin login w/ username')
-                const playerName = await getPlayerName(playerUUID)
-                handleSuccessfulLogin(
-                    playerName,
-                    playerUUID,
-                    uuidToPin(username)
-                )
-            } else {
-                // Assuming uuidToPin is a function that generates a PIN from the username
-                const pin = uuidToPin(playerUUID)
-                if (password !== pin) {
-                    console.log('Incorrect pin')
-                    JSAlert.alert(
-                        'The auth key you entered is incorrect.',
-                        'Incorrect Authentication',
-                        JSAlert.Icons.Failed
-                    )
-                } else {
-                    console.log('Correct pin')
-                    handleSuccessfulLogin(username, playerUUID, password)
-                }
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error)
-        })
-}
-
 function handleSuccessfulLogin(playerName, username, password) {
     localStorage.setItem('playerName', playerName)
     localStorage.setItem('playerUUID', username)
@@ -120,17 +74,36 @@ function handleSuccessfulLogin(playerName, username, password) {
     })
 }
 
-const playerUUID = localStorage.getItem('playerUUID')
-const playerKEY = localStorage.getItem('playerKEY')
-if (playerUUID) {
-    getPlayerName(playerUUID).then((playerName) => {
-        if (playerName) {
-            console.log('Player Name:', playerName)
-            document.getElementById('username').value = playerName
-            document.getElementById('password').value = playerKEY
-            document.getElementById(
-                'playerNameSpan'
-            ).innerText = ` (${playerName})`
-        }
+const playerName = localStorage.getItem('playerName')
+if (playerName) {
+    console.log('Player Name:', playerName)
+    document.getElementById('username').value = playerName
+    document.getElementById('playerNameSpan').innerText = ` (${playerName})`
+}
+
+const mysql = require('mysql')
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+    host: '104.234.220.137',
+    user: 'u477_EJRj4YFNz7',
+    password: '2maj9rGF@qCDw^=@CbHPIrmp',
+    database: 's477_MAIN',
+})
+
+// Function to check the database for a matching entry with SN and PIN
+function checkDatabase(SN, PIN) {
+    return new Promise((resolve, reject) => {
+        // Construct the SQL query
+        const query = `SELECT * FROM players WHERE SN = ? AND PIN = ?`
+
+        // Execute the query
+        connection.query(query, [SN, PIN], (error, results) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(results)
+            }
+        })
     })
 }

@@ -53,20 +53,23 @@ function updateModpack() {
 }
 
 function updateApp() {
-    JSAlert.confirm('Click okay to update the app!', 'New App Version!').then(
-        function (result) {
-            if (!result) return
-            const appUpdaterURL = localStorage.getItem('appUpdaterURL')
-            const tempDir = os.tmpdir()
-            const tempSubDir = path.join(tempDir, '.raptorTemp')
-            const filename = path.join(tempSubDir, 'RaptorLauncher.exe')
-            if (!fs.existsSync(tempSubDir)) {
-                fs.mkdirSync(tempSubDir, { recursive: true })
-            }
-
-            downloadUpdater(appUpdaterURL, filename)
+    const hardVersion = localStorage.getItem('hardVersion')
+    const latestHardVersion = localStorage.getItem('latestHardVersion')
+    JSAlert.confirm(
+        `Click okay to update the app!<br>${hardVersion} ⇒ ${latestHardVersion}`,
+        'New App Version!'
+    ).then(function (result) {
+        if (!result) return
+        const appUpdaterURL = localStorage.getItem('appUpdaterURL')
+        const tempDir = os.tmpdir()
+        const tempSubDir = path.join(tempDir, '.raptorTemp')
+        const filename = path.join(tempSubDir, 'RaptorLauncher.exe')
+        if (!fs.existsSync(tempSubDir)) {
+            fs.mkdirSync(tempSubDir, { recursive: true })
         }
-    )
+
+        downloadUpdater(appUpdaterURL, filename)
+    })
 }
 
 async function downloadUpdater(url, destinationPath) {

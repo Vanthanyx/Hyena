@@ -33,11 +33,13 @@ const createWindow = () => {
     ipcMain.on('open-login-window', () => {
         const loginWindow = new BrowserWindow({
             width: 400,
-            height: 400,
+            height: 325,
             frame: false,
             icon: path.join(__dirname, 'src/assets/icons/rhombus.png'),
             webPreferences: {
                 nodeIntegration: true,
+                contextIsolation: false,
+                enableRemoteModule: true,
             },
         })
 
