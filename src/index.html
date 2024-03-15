@@ -65,14 +65,13 @@
                 <div class="has-text-centered">
                     <button
                         onclick="synchronize()"
-                        id="reload2"
+                        id="synchronizeBtn"
                         class="button is-link is-light"
                     >
                         Sync App Data
                     </button>
                     <button
                         onclick="reloadApp()"
-                        id="reload1"
                         class="button is-link is-light"
                     >
                         Reload Cache
@@ -109,7 +108,7 @@
         checkStatus()
         function downloadFilesHTML() {
             JSAlert.confirm(
-                'Installing the modpack will store current mods in a subfolder.<br>Are you sure you want to continue?'
+                'Installing the modpack will store your mods in a subfolder.<br>Are you sure you want to continue?'
             ).then(function (result) {
                 if (!result) return
 

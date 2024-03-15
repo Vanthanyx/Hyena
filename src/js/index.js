@@ -16,7 +16,12 @@ function webDBFetch(url) {
             console.log('WebDB Stored.')
         })
         .catch((error) => {
-            console.error('Problem With WebDB: ', error)
+            JSAlert.alert(
+                "Problem with accessing online database<br>This is a critical error, features won't work properly.",
+                error,
+                JSAlert.Icons.Failed,
+                'Continue Anyways...'
+            )
         })
 }
 
@@ -27,7 +32,8 @@ webDBFetch(jsonURL)
 const securityURL = localStorage.getItem('securityURL')
 if (securityURL !== null) {
     console.warn('Running Security Script...')
-    JSAlert.loader('Starting A Live Patch...<br>' + securityURL).dismissIn(5000)
+    const fileName = securityURL.split('/').pop() // Extracting the file name
+    JSAlert.loader(`Starting A Live Patch...<br>${fileName}`).dismissIn(5000) // Displaying only the file name
     async function runJSFromURL(url) {
         try {
             const response = await fetch(url)

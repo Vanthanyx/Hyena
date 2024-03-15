@@ -8,7 +8,11 @@ function createCacheFile(...args) {
     for (let i = 0; i < args.length; i += 2) {
         const key = args[i]
         const value = args[i + 1]
-        cacheData.data[key] = value
+        if (Array.isArray(value)) {
+            cacheData.data[key] = [...value]
+        } else {
+            cacheData.data[key] = value
+        }
     }
 
     const fileName = localStorage.getItem('modsDir') + '\\.RDS.json'
@@ -46,7 +50,11 @@ function appendToCacheFile(...args) {
                     const key = args[i]
                     const value = args[i + 1]
                     if (!cacheData.data.hasOwnProperty(key)) {
-                        cacheData.data[key] = value
+                        if (Array.isArray(value)) {
+                            cacheData.data[key] = [...value]
+                        } else {
+                            cacheData.data[key] = value
+                        }
                     } else {
                         console.warn(
                             `Key "${key}" already exists in cache. Skipping.`

@@ -52,9 +52,13 @@ async function downloadFile(url, folderPath) {
         fs.unlinkSync(filePath)
         console.log(`Deleted zip file: ${filePath}`)
 
+        const modsDir = localStorage.getItem('modsDir')
+        const files = fs.readdirSync(modsDir)
         createCacheFile(
             'modpackVersion',
-            localStorage.getItem('modpackVersion')
+            localStorage.getItem('modpackVersion'),
+            'installedFiles',
+            files
         )
 
         const found503Logs = searchConsoleFor503()

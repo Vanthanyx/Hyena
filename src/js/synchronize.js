@@ -1,4 +1,9 @@
 function synchronize() {
+    const syncBtn = document.getElementById('synchronizeBtn')
+    syncBtn.disabled = true
+    syncBtn.classList.remove('is-light')
+    syncBtn.classList.add('is-loading')
+
     const keys = Object.keys(localStorage)
     let localStorageValues = {}
     keys.forEach((key) => {
@@ -41,6 +46,9 @@ function synchronize() {
     }
 
     setTimeout(() => {
-        JSAlert.alert('Synchronization Complete.')
-    }, 1500)
+        JSAlert.alert('Synchronization Complete.', null, JSAlert.Icons.Success)
+        syncBtn.disabled = false
+        syncBtn.classList.add('is-light')
+        syncBtn.classList.remove('is-loading')
+    }, 3000)
 }
