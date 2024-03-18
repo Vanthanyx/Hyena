@@ -15,7 +15,9 @@
     </head>
     <body>
         <div class="titlebar">
-            Raptor | Live Server Version&nbsp;<span id="liveVersion"></span>
+            Raptor | Local v<span id="version"></span>, Live v<span
+                id="liveVersion"
+            ></span>
         </div>
         <div class="menu">
             <a onclick="enterCode()"
@@ -150,6 +152,12 @@
             document.getElementById('liveVersion').innerText = liveVersion
             document.getElementById('liveVersion').style.color = 'white'
             document.getElementById('liveVersion').style.textDecoration =
+                'underline'
+
+            const version = localStorage.getItem('hardVersion')
+            document.getElementById('version').innerText = version
+            document.getElementById('version').style.color = 'white'
+            document.getElementById('version').style.textDecoration =
                 'underline'
 
             function setVanilla() {

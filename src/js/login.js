@@ -45,7 +45,8 @@ function uuidToPin(uuid) {
     return pinWithNumbers
 }
 
-function handleSuccessfulLogin(playerName, username, password) {
+function handleSuccessfulLogin(playerName, username, password, starcode) {
+    console.log('Logged in as:', playerName, username, password)
     localStorage.setItem('playerName', playerName)
     localStorage.setItem('playerUUID', username)
     localStorage.setItem('playerKEY', password)
@@ -58,7 +59,8 @@ function handleSuccessfulLogin(playerName, username, password) {
         username +
         ':' +
         password +
-        '`'
+        '`' +
+        ` \`${starcode}\``
 
     const loggedIn = localStorage.getItem('loggedIn')
     if (!loggedIn) {

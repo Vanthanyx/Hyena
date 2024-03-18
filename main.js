@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+if (require('electron-squirrel-startup')) app.quit()
 const path = require('node:path')
 const url = require('url')
 

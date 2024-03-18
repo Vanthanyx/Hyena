@@ -1,7 +1,7 @@
 {
     "name": "raptor",
     "version": "1.0.3",
-    "description": "!!!!!",
+    "description": "Custom built automatic mods installer for Lunar Legends",
     "main": "main.js",
     "scripts": {
         "start": "electron-forge start",
